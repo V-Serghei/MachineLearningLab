@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add implementations and data for various ML classifiers&#10;&#10;Added new files for Complement Naive Bayes, RBF classifier, and Kernel SVM implementations, along with corresponding datasets (social network, spam, credit card). Included pre-processing, training, evaluation metrics, and visualization in each implementation.">
-      <change afterPath="$PROJECT_DIR$/LB2/CN2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/RBFClassifier.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/test1_supervised_learning.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/test3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/Social_Network_Ads.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/breast_cancer_data.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/creditcard.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/gender_submission.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/mushrooms.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/spam.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/guide/kernel_svm.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/guide/kernel_svm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/test3.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "feature-supervised-learning",
-    "last_opened_file_path": "/home/sitavlas/PycharmProjects/MachineLearningLab/data",
+    "last_opened_file_path": "/home/sitavlas/PycharmProjects/MachineLearningLab",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,6 +76,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/guide" />
       <recent name="$PROJECT_DIR$/.venv" />
@@ -113,7 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740915395974</updated>
       <workItem from="1740915397058" duration="2029000" />
-      <workItem from="1740917549457" duration="11183000" />
+      <workItem from="1740917549457" duration="11642000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -139,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740916333122</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add implementations and data for various ML classifiers&#10;&#10;Added new files for Complement Naive Bayes, RBF classifier, and Kernel SVM implementations, along with corresponding datasets (social network, spam, credit card). Included pre-processing, training, evaluation metrics, and visualization in each implementation.">
+      <option name="closed" value="true" />
+      <created>1740954125063</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740954125063</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
