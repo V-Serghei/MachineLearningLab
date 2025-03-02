@@ -1,6 +1,6 @@
-# STEP 1 : Импортируйте pandas, numpy, matplotlib и seaborn. Затем установите %matplotlib inline
-# (позже при необходимости импортируйте sklearn).
-print("Шаг 1")
+# STEP 1: Import pandas, numpy, matplotlib, and seaborn. Then set %matplotlib inline.
+# (Later, import sklearn if necessary.)
+print("Step 1")
 
 import pandas as pds
 import numpy
@@ -8,196 +8,172 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from numpy.ma.core import correlate
 
-print("Все либы подключили")
-#это нужно было, чтоб показать все колонки в консоли
-#а так же расширение вывода, чтобы он вместился весь в консоль
+print("All libraries imported")
+# Display all columns in the console
+# Also extend the output width to fit in the console
 pds.set_option('display.max_columns', None)
 pds.set_option('display.width', 1000)
 
-#Шаг 2: Прочитайте файл movies.csv в DataFrame под названием movies
-print("Шаг 2")
+# Step 2: Read the file movies.csv into a DataFrame named movies
+print("Step 2")
 
 movies = pds.read_csv("../data/movies.csv")
-print("Файлик подгрузили")
+print("File loaded")
 
-#Шаг 3: Выведите первые строки (head) данных о фильмах и получите информацию о них с
-#помощью функций info() и describe().
-print("Шаг 3")
+# Step 3: Print the first rows (head) of the film data and get its information
+# using the functions info() and describe().
+print("Step 3")
 print(movies.head())
 print(movies.info())
 print(movies.describe())
 
-#замена всех пропущенных данных средними значениями
+# Replace all missing data with mean values
 movies['gross'] = movies['gross'].fillna(movies['gross'].mean())
 movies['budget'] = movies['budget'].fillna(movies['budget'].mean())
 movies['runtime'] = movies['runtime'].fillna(movies['runtime'].mean())
 movies['score'] = movies['score'].fillna(movies['score'].mean())
 movies['votes'] = movies['votes'].fillna(movies['votes'].mean())
-#тут я не знал если можно так делать
-#movies = movies[movies['gross'] < movies['gross'].quantile(0.95)]
-#movies = movies[movies['budget'] < movies['budget'].quantile(0.95)]
+# Unsure if this is allowed
+# movies = movies[movies['gross'] < movies['gross'].quantile(0.95)]
+# movies = movies[movies['budget'] < movies['budget'].quantile(0.95)]
 
-#удаление случайных дубликотов
+# Remove random duplicates
 movies.drop_duplicates(inplace=True)
 
-#Используйте seaborn для создания jointplot (совместной диаграммы) для сравнения колонок budget
-# и gross. Есть ли корреляция?
-# По наблюдениям, корреляция наблюдается, данные бюджета непосредственно влияют на итоговую прибыль
+# Use seaborn to create a jointplot to compare the columns budget and gross.
+# Is there a correlation? Observations show a correlation: budget data directly affects gross income
 sns.jointplot(x='budget', y='gross', data=movies, kind='scatter')
-plt.suptitle("Зависимость кассовых сборов от бюджета", y=1.02)
+plt.suptitle("Relationship between Box Office Gross and Budget", y=1.02)
 plt.show()
 
-# STEP 4: Jointplot – зависимость между продолжительностью (runtime) и кассовыми сборами
-#что касается длительности и прибыли, то тут есть проявление корреляции, но она весьма незначительая,
-# поэтому это больше как случайность чем зависимость
+# STEP 4: Jointplot – relationship between runtime and gross income
+# Regarding runtime and revenue, a correlation can be observed, but it is very insignificant,
+# so it's more of a coincidence than a dependency
 sns.jointplot(x='runtime', y='gross', data=movies, kind='scatter')
-plt.suptitle("Шаг 4: Зависимость кассовых сборов от продолжительности фильма", y=1.02)
+plt.suptitle("Step 4: Relationship between Box Office Gross and Runtime", y=1.02)
 plt.show()
 
-#STEP 5 -Используйте jointplot() для построения 2D-диаграммы, сравнивающей runtime и
-#score.
-# так же и рейтинг, и длительность. длительность не особо влияет на рейтинг
+# STEP 5 - Use jointplot() to create a 2D plot comparing runtime and score.
+# Similarly, runtime doesn't particularly influence the score either.
 sns.jointplot(x='runtime', y='score', data=movies, kind='hex')
-plt.suptitle("Шаг 5: Зависимость рейтинга от продолжительности фильма", y=1.02)
+plt.suptitle("Step 5: Relationship between Movie Runtime and Score", y=1.02)
 plt.show()
 
-#STEP 6 -Исследуйте взаимосвязи во всем наборе данных. Используйте pairplot, чтобы воссоздать
-#приведенный ниже график. (Не беспокойтесь о цветах.)
-# наблюдая все сопоставления данных.
-# все же хочется сказать что корреляция между бюжетом и прибылью
-# прослеживается больше всего
+# STEP 6 - Investigate relationships in the entire dataset. Use pairplot to recreate
+# the provided chart. (Don't worry about the colors.)
+# Observing all relationships, the strongest correlation is between budget and gross income.
 sns.pairplot(movies[['budget', 'runtime', 'score', 'votes', 'gross']])
-plt.suptitle("Шаг 6:  Смотрим все", y=1.02)
+plt.suptitle("Step 6: Exploring All Features", y=1.02)
 plt.show()
 
-#STEP 7
-#Создайте линейную модель графически (используя lmplot из seaborn) для данных budget
-#vs. gross.
+# STEP 7
+# Create a linear regression model plot using lmplot from seaborn for budget vs. gross data
 sns.lmplot(x='budget', y='gross', data=movies, line_kws={'color': 'red'})
-plt.title("Шаг 7: Линейная модель - кассовые сборы от бюджета")
+plt.title("Step 7: Linear Model - Gross Income vs. Budget")
 plt.show()
 
-#Шаг 8: Определите переменную X, содержащую числовые характеристики фильмов, и
-#переменную y, содержащую колонку gross.
-print("Шаг 8")
+# Step 8: Define variable X containing the numerical features of the movies,
+# and variable y containing the gross column.
+print("Step 8")
 X = movies[['budget', 'runtime', 'score', 'votes']]
 y = movies['gross']
 
-print("Первые 5 строк признаков (X):")
+print("First 5 rows of features (X):")
 print(X.head())
-print("\nПервые 5 значений целевой переменной (y):")
+print("\nFirst 5 values of the target variable (y):")
 print(y.head())
 
-# Шаг 9: Используйте model_selection.train_test_split из sklearn для разделения данных на
-# обучающий и тестовый наборы. Установите test_size=0.3 и random_state=101.
-print("Шаг 9")
+# Step 9: Use model_selection.train_test_split from sklearn to split the data into
+# training and testing datasets. Set test_size=0.3 and random_state=101.
+print("Step 9")
 from sklearn.model_selection import train_test_split
 
-#Разделение данных на обучающую и тестовую выборки
-#30% данных идёт в тестовую выборку, 70% — в обучающую
+# Splitting the data into training and testing datasets
+# 30% of the data goes into the testing set, 70% into the training set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+print(f"Size of X_train: {X_train.shape}")
+print(f"Size of X_test: {X_test.shape}")
+print(f"Size of y_train: {y_train.shape}")
+print(f"Size of y_test: {y_test.shape}")
 
-print(f"Размер X_train: {X_train.shape}")
-print(f"Размер X_test: {X_test.shape}")
-print(f"Размер y_train: {y_train.shape}")
-print(f"Размер y_test: {y_test.shape}")
-
-#Теперь обучим модель на обучающем наборе данных!
-#Шаг 10: Импортируйте LinearRegression из sklearn.linear_model
+# Now train the model using the training dataset!
+# Step 10: Import LinearRegression from sklearn.linear_model
 from sklearn.linear_model import LinearRegression
 
-# Шаг 11: Создайте экземпляр модели LinearRegression() с именем lm.
+# Step 11: Create an instance of the LinearRegression model named lm.
 lm = LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1)
 
-#Шаг 12: Обучите lm на обучающих данных.
-#LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+# Step 12: Train lm using the training data.
 lm.fit(X_train, y_train)
-print("Шаг 10,11,12: Подключили lm настроили для обучения. Передали данные для обучения")
-print("Обучили модель)")
+print("Steps 10, 11, 12: Imported lm, set it up for training, and trained it on the data.")
+print("Model training complete.")
 
-#Шаг 13: Выведите коэффициенты модели.
-print("Шаг 13")
-print("Коэффициенты модели:", lm.coef_)
-print("Свободный член (intercept):", lm.intercept_)
+# Step 13: Print the model coefficients.
+print("Step 13")
+print("Model coefficients:", lm.coef_)
+print("Intercept:", lm.intercept_)
 
-# Оценим производительность модели, прогнозируя тестовые значения!
-# Шаг 14: Используйте lm.predict() для предсказания значений для X_test.
+# Assess the model's performance by predicting test values!
+# Step 14: Use lm.predict() to predict values for X_test.
 y_pred = lm.predict(X_test)
-print("Шаг 14:Предсказали значения для X_test")
+print("Step 14: Predicted values for X_test")
 
-# Шаг 15: Постройте диаграмму рассеяния реальных значений теста против предсказанных
-# значений.
-print("Шаг 15 - На графике")
+# Step 15: Create a scatterplot of the true test data vs. predicted values.
+print("Step 15 - On the graph")
 plt.scatter(y_test, y_pred)
-plt.xlabel("Реальные значения (y_test)")
-plt.ylabel("Предсказанные значения (y_pred)")
-plt.title("Шаг 15 - Реальные vs. Предсказанные значения")
+plt.xlabel("True Values (y_test)")
+plt.ylabel("Predicted Values (y_pred)")
+plt.title("Step 15 - True vs. Predicted Values")
 plt.show()
 
-# Оценим производительность модели, вычислив сумму квадратов остатков и коэффициент
-# детерминации (R^2).
-# Шаг 16: Вычислите среднюю абсолютную ошибку (MAE), среднеквадратичную ошибку (MSE) и
-# корень среднеквадратичной ошибки (RMSE). Обратитесь к лекции или Wikipedia для формул
+# Evaluate the model's performance by calculating the sum of squared residuals and the coefficient of determination (R^2).
+# Step 16: Calculate the Mean Absolute Error (MAE), Mean Squared Error (MSE), and
+# Root Mean Squared Error (RMSE). Refer to the lecture or Wikipedia for formulas.
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = mse ** 0.5
-print("Шаг 16")
+print("Step 16")
 
-print(f"Средняя абсолютная ошибка (MAE): {mae}")
-print(f"Среднеквадратичная ошибка (MSE): {mse}")
-print(f"Корень среднеквадратичной ошибки (RMSE): {rmse}")
+print(f"Mean Absolute Error (MAE): {mae}")
+print(f"Mean Squared Error (MSE): {mse}")
+print(f"Root Mean Squared Error (RMSE): {rmse}")
 
-# Быстро исследуем остатки, чтобы убедиться, что с данными все в порядке.
-# Шаг 17: Постройте гистограмму остатков и убедитесь, что они распределены нормально.
-# Используйте либо seaborn distplot, либо plt.hist().
-print("Шаг 17 - на графике")
+# Quickly investigate the residuals to ensure the data is valid.
+# Step 17: Plot a histogram of the residuals to ensure they are normally distributed.
+# Use either seaborn distplot or plt.hist().
+print("Step 17 - On the graph")
 
 residuals = y_test - y_pred
 sns.histplot(residuals, kde=True, bins=20)
-plt.xlabel("Остатки")
-plt.ylabel("Частота")
-plt.title("Шаг 17 - Распределение остатков")
+plt.xlabel("Residuals")
+plt.ylabel("Frequency")
+plt.title("Step 17 - Residual Distribution")
 plt.show()
 
-# Все еще хотим ответить на изначальный вопрос: стоит ли сосредоточиться на биджете, или другом показателе
-# что все же является лучшим показателем кассового сбора?
-# Шаг 18: Воссоздайте приведенный ниже набор данных
-print("Шаг 18")
+# Still aiming to answer the original question: should we focus on the budget, or some other feature?
+# What is the best indicator of gross income?
+# Step 18: Recreate the dataset shown below
+print("Step 18")
 
-coefficients = pds.DataFrame(lm.coef_, X.columns, columns=['Коэффициент'])
+coefficients = pds.DataFrame(lm.coef_, X.columns, columns=['Coefficient'])
 print(coefficients)
-print("Шаг 19 и 20 - выводы, в комментариях)")
+print("Steps 19 and 20 - conclusions in the comments")
 
-# Шаг 19: Ответьте на вопрос: Как можно интерпретировать эти коэффициенты?
-#budget (Бюджет фильма): 2.54
-#при увеличении бюджета фильма на 1 доллар, кассовые сборы в среднем увеличиваются на 2.54 доллара
-#runtime (Длительность фильма): -268634.47
-# чтто может значит только то, что с увеличением длительности фильма на 1 минуту
-# кассовые сборы в среднем уменьшаются на 268634
-#votes (Количество голосов зрителей): 418.31
-#этоо значит,  что увеличение количества голосов на 1 связано с ростом кассовых
-# сборов в среднем на 418 долларов.
-#score(оценка) :-1.637712e+06
-#не логично, но по результатам увеличение оценки, означает спад бюджета
+# Step 19: Answer the question: How can these coefficients be interpreted?
+# budget: 2.54
+# An increase in a movie's budget by 1 dollar increases gross income by an average of 2.54 dollars
+# runtime: -268634.47
+# This means that an increase in movie runtime by 1 minute decreases gross income by an average of 268,634 dollars
+# votes: 418.31
+# This means that an increase in the number of audience votes by 1 correlates with an average gross income increase of 418 dollars
+# score: -1.637712e+06
+# Not logical, but the results indicate an increase in rating correlates with a decrease in gross income
 
-
-# Шаг 20: На чем стоит сосредоточиться, чтобы повысить кассовые сборы
-#И тут становится понятно, что чем выше бюджет, тем больше сборы, скорее потому, что
-# лучше специфекты, актерский состав и тд. Ну и так же количество голосов само собой
-# чем больше голосов, тем больше людей посмотрело фильм, а значит больше денег, все логично,
-# а вот влияние самой оценки и времени фильма имеют отрицательный коэффициент
-# ну и если логически подумать, оценка не всегда влияет, особенно на релизе, а так же длительность фильма
-# не показатель, видел много хороших короткометражек. И 3 часовые фильмы, тоже порой приносят удовольствие
-# смотряться на одном дыхании. В общем как то так.
-
-
-#Я если честно не знал, что делатть с такими значенияим в вычеслении ошибок модели.
-#Были только мыли о том, что это все же бюджет и сборы и количество там варьирует от сотен тысяч до миллиардов
-#возможно такие результаты поэтому. Хотел бы узнать что делать в таком случае.
-#Был вариант отсечь самые большие значения, но результат особо не изменился, что касается вычислению ошибок
-# а вот визуализация мне не понравилась, как будто бы корреляция менее прослеживается
-# был вариант привести все к логарифмам, но я не уверен что так можно. Надеюсь узнать,
-# правильно ли все сделано и можно ли было лучше
+# Step 20: What should be prioritized to maximize gross income?
+# It is clear that the higher the budget, the higher the revenue (likely due to better effects, cast, etc.).
+# Similarly, more votes indicate more people watched the movie, thus increasing gross revenue—this is logical.
+# However, rating's and runtime's negative coefficients suggest that they are not the deciding factors.
+# Ratings, especially at release, may not always influence revenue. Similarly, runtime is not a significant determinant.
