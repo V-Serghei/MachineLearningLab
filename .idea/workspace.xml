@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add AdaBoost implementation and update project structure&#10;&#10;Introduced a new AdaBoost classifier script and added a README with setup instructions. Updated `.gitignore` to include excluded files and archived the `creditcard.tar.xz` dataset. Adjusted project files for better organization and task tracking.">
-      <change afterPath="$PROJECT_DIR$/data/creditcard.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment=".gitignore">
+      <change afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/heart.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/CN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/CN2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,31 +57,37 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.AdaBoost.executor": "Run",
     "Python.CN2.executor": "Run",
     "Python.ClassificationAndRegressionTrees.executor": "Run",
+    "Python.ComplementNaiveBayes_classifier.executor": "Run",
+    "Python.RBFClassifier.executor": "Run",
+    "Python.RBFClassifierHeart.executor": "Run",
     "Python.kernel_svm.executor": "Run",
     "Python.linear_regression.executor": "Run",
     "Python.main.executor": "Run",
     "Python.supervised_learning.executor": "Debug",
+    "Python.test1_supervised_learning.executor": "Run",
     "Python.test2.executor": "Run",
     "Python.test3.executor": "Run",
     "Python.z1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "feature-supervised-learning",
-    "last_opened_file_path": "/home/sitavlas/PycharmProjects/MachineLearningLab",
+    "last_opened_file_path": "/home/sitavlas/PycharmProjects/MachineLearningLab/data",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/guide" />
       <recent name="$PROJECT_DIR$/.venv" />
     </key>
@@ -101,7 +113,8 @@
       <option name="presentableId" value="Default" />
       <updated>1740915395974</updated>
       <workItem from="1740915397058" duration="2029000" />
-      <workItem from="1740917549457" duration="11949000" />
+      <workItem from="1740917549457" duration="12171000" />
+      <workItem from="1741001642752" duration="8594000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -143,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740954678674</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".gitignore">
+      <option name="closed" value="true" />
+      <created>1740954900312</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740954900312</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +176,8 @@
     <MESSAGE value="Refactor linear_regression.py: update comments and outputs" />
     <MESSAGE value="Add implementations and data for various ML classifiers&#10;&#10;Added new files for Complement Naive Bayes, RBF classifier, and Kernel SVM implementations, along with corresponding datasets (social network, spam, credit card). Included pre-processing, training, evaluation metrics, and visualization in each implementation." />
     <MESSAGE value="Add AdaBoost implementation and update project structure&#10;&#10;Introduced a new AdaBoost classifier script and added a README with setup instructions. Updated `.gitignore` to include excluded files and archived the `creditcard.tar.xz` dataset. Adjusted project files for better organization and task tracking." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add AdaBoost implementation and update project structure&#10;&#10;Introduced a new AdaBoost classifier script and added a README with setup instructions. Updated `.gitignore` to include excluded files and archived the `creditcard.tar.xz` dataset. Adjusted project files for better organization and task tracking." />
+    <MESSAGE value=".gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value=".gitignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -169,14 +191,19 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MachineLearningLab$test1_supervised_learning.coverage" NAME="test1_supervised_learning Coverage Results" MODIFIED="1741002790935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$RBFClassifier.coverage" NAME="RBFClassifier Coverage Results" MODIFIED="1741010305887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$linear_regression.coverage" NAME="linear_regression Coverage Results" MODIFIED="1740916270146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB1" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$supervised_learning.coverage" NAME="supervised_learning Coverage Results" MODIFIED="1740947571113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$CN2.coverage" NAME="CN2 Coverage Results" MODIFIED="1740953317331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1740953958579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1740953768029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$CN2.coverage" NAME="CN2 Coverage Results" MODIFIED="1741006758188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$main.coverage" NAME="main Coverage Results" MODIFIED="1740915614871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$kernel_svm.coverage" NAME="kernel_svm Coverage Results" MODIFIED="1740918959121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/guide" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$AdaBoost.coverage" NAME="AdaBoost Coverage Results" MODIFIED="1741006195797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1740952674659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$z1.coverage" NAME="z1 Coverage Results" MODIFIED="1740947256989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$supervised_learning.coverage" NAME="supervised_learning Coverage Results" MODIFIED="1740947571113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$ComplementNaiveBayes_classifier.coverage" NAME="ComplementNaiveBayes_classifier Coverage Results" MODIFIED="1741007535195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1740953958579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$RBFClassifierHeart.coverage" NAME="RBFClassifierHeart Coverage Results" MODIFIED="1741010482894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1741006048290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
   </component>
 </project>
