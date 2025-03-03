@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add spam classification enhancements and heart dataset&#10;&#10;Enhanced the spam classification project with improved comments, visualizations (confusion matrix, ROC curve), and metrics evaluation for the Complement Naive Bayes model. Additionally, introduced the &quot;heart.csv&quot; dataset for potential use in heart disease prediction.">
-      <change afterPath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/CN2.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/RBFClassifier.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.ipynb" afterDir="false" />
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +114,7 @@
       <workItem from="1740915397058" duration="2029000" />
       <workItem from="1740917549457" duration="12171000" />
       <workItem from="1741001642752" duration="8863000" />
-      <workItem from="1741028340524" duration="2364000" />
+      <workItem from="1741028340524" duration="8370000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -176,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741010969639</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes">
+      <option name="closed" value="true" />
+      <created>1741030741234</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741030741234</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +194,8 @@
     <MESSAGE value="Add AdaBoost implementation and update project structure&#10;&#10;Introduced a new AdaBoost classifier script and added a README with setup instructions. Updated `.gitignore` to include excluded files and archived the `creditcard.tar.xz` dataset. Adjusted project files for better organization and task tracking." />
     <MESSAGE value=".gitignore" />
     <MESSAGE value="Add spam classification enhancements and heart dataset&#10;&#10;Enhanced the spam classification project with improved comments, visualizations (confusion matrix, ROC curve), and metrics evaluation for the Complement Naive Bayes model. Additionally, introduced the &quot;heart.csv&quot; dataset for potential use in heart disease prediction." />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -207,16 +212,16 @@
     <SUITE FILE_PATH="coverage/MachineLearningLab$test1_supervised_learning.coverage" NAME="test1_supervised_learning Coverage Results" MODIFIED="1741002790935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$RBFClassifier.coverage" NAME="RBFClassifier Coverage Results" MODIFIED="1741010305887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$linear_regression.coverage" NAME="linear_regression Coverage Results" MODIFIED="1741028551538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB1" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$CN2.coverage" NAME="CN2 Coverage Results" MODIFIED="1741006758188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$CN2.coverage" NAME="CN2 Coverage Results" MODIFIED="1741035730633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$main.coverage" NAME="main Coverage Results" MODIFIED="1740915614871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$kernel_svm.coverage" NAME="kernel_svm Coverage Results" MODIFIED="1740918959121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/guide" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$AdaBoost.coverage" NAME="AdaBoost Coverage Results" MODIFIED="1741029008600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$AdaBoost.coverage" NAME="AdaBoost Coverage Results" MODIFIED="1741032181690" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1740952674659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$z1.coverage" NAME="z1 Coverage Results" MODIFIED="1740947256989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$supervised_learning.coverage" NAME="supervised_learning Coverage Results" MODIFIED="1740947571113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$ComplementNaiveBayes_classifier.coverage" NAME="ComplementNaiveBayes_classifier Coverage Results" MODIFIED="1741007535195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1740953958579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$RBFClassifierHeart.coverage" NAME="RBFClassifierHeart Coverage Results" MODIFIED="1741010482894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1741006048290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1741035189373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
   </component>
 </project>
