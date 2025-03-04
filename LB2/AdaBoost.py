@@ -1,10 +1,8 @@
-# Импорт необходимых библиотек
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Импорт модулей для машинного обучения и предобработки
 from sklearn.model_selection import train_test_split  # Разделение данных на обучающую и тестовую выборки
 from sklearn.preprocessing import StandardScaler  # Масштабирование данных
 from sklearn.ensemble import AdaBoostClassifier  # Алгоритм AdaBoost
@@ -14,10 +12,10 @@ from sklearn.metrics import (  # Метрики оценки качества м
     classification_report, confusion_matrix, accuracy_score, roc_curve, auc
 )
 
-# 1. Загрузка данных
-# Загрузка датасета из файла CSV
+
+# 1. Загрузка датасета из файла CSV
 data = pd.read_csv("../data/breast_cancer_data.csv")
-# Удаление столбцов с названием 'Unnamed', если они присутствуют
+# Удаление столбцов с названием 'Unnamed', если они присутствуют(они могут появляться случайно в файлах такого формата)
 data = data.loc[:, ~data.columns.str.contains('Unnamed')]
 
 # 2. Предварительная обработка данных
@@ -36,11 +34,21 @@ y = data['diagnosis']
 imputer = SimpleImputer(strategy='median')
 X = pd.DataFrame(imputer.fit_transform(X), columns=X.columns)
 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', 100)
+
+print(data.head())
+
+print(data.info())
+
+print(data.describe())
+
 # 3. Разделение данных на обучающую и тестовую выборки
 # Данные делятся в пропорции 70/30 с фиксированным random_state для воспроизводимости
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
+
 
 # 4. Масштабирование признаков
 # Нормализация данных с помощью StandardScaler (важно для большинства моделей машинного обучения)
@@ -63,6 +71,7 @@ ada = AdaBoostClassifier(
 # Обучение модели на масштабированных тренировочных данных
 ada.fit(X_train_scaled, y_train)
 
+
 # 7. Предсказание и оценка модели
 # Выполнение предсказания на тестовых данных
 y_pred = ada.predict(X_test_scaled)
@@ -70,13 +79,18 @@ y_pred = ada.predict(X_test_scaled)
 # Вывод отчёта по классификации (precision, recall, f1-score) для оценки качества модели
 print("Отчет по классификации:")
 print(classification_report(y_test, y_pred, digits=4))
+#Precision показывает, сколько предсказаний для класса были правильными, recall — сколько реальных объектов класса модель нашла, а F1-score — их баланс. Accuracy —
+# доля верных предсказаний. Macro avg усредняет метрики по классам, а weighted avg учитывает их частоту. Модель работает с точностью 97%, хорошо сбалансирована и
+# редко ошибается.
 
 # Вывод матрицы ошибок для анализа правильных и ошибочных предсказаний
 print("Матрица ошибок:")
 print(confusion_matrix(y_test, y_pred))
 
+
 # Вывод точности (Accuracy) модели
 print("Accuracy: {:.4f}".format(accuracy_score(y_test, y_pred)))
+
 
 # 8. Визуализация ROC-кривой
 # Расчёт вероятностей для положительного класса и ROC-кривой
@@ -94,6 +108,7 @@ plt.title('ROC кривая для AdaBoost')
 plt.legend(loc="lower right")
 plt.show()
 
+
 # Визуализация матрицы ошибок
 # Используется heatmap для отображения количества ошибок и успешных предсказаний
 plt.figure(figsize=(6, 5))
@@ -103,7 +118,8 @@ plt.ylabel("Истинный класс")
 plt.title("Матрица ошибок")
 plt.show()
 
-# Дополнительные графики для анализа
+
+
 
 # 9. Распределение целевой переменной
 # Построение гистограммы для анализа пропорции классов в данных
@@ -114,6 +130,7 @@ plt.ylabel("Количество")
 plt.title("Распределение целевой переменной")
 plt.show()
 
+
 # 10. Корреляционная матрица
 # Визуализация корреляционной матрицы для нахождения взаимосвязей между признаками
 plt.figure(figsize=(12, 10))
@@ -122,11 +139,13 @@ sns.heatmap(corr_matrix, cmap="coolwarm", annot=False)
 plt.title("Корреляционная матрица признаков")
 plt.show()
 
+
 # 11. Гистограммы распределения признаков
 # Построение гистограмм для изучения распределения числовых признаков
 X.hist(figsize=(12, 10), bins=20, color='steelblue', edgecolor='black')
 plt.suptitle("Гистограммы распределения признаков")
 plt.show()
+
 
 # 12. Важность признаков
 # Вычисление важности признаков по модели AdaBoost

@@ -4,10 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes">
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Refactor AdaBoost pipeline for streamlined functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/CN2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/CN2.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/CN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/CN2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifier.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifier.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifierHeart.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifierHeart.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,35 +63,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.AdaBoost.executor": "Run",
-    "Python.CN2.executor": "Run",
-    "Python.ClassificationAndRegressionTrees.executor": "Run",
-    "Python.ComplementNaiveBayes_classifier.executor": "Run",
-    "Python.RBFClassifier.executor": "Run",
-    "Python.RBFClassifierHeart.executor": "Run",
-    "Python.kernel_svm.executor": "Run",
-    "Python.linear_regression.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.supervised_learning.executor": "Debug",
-    "Python.test1_supervised_learning.executor": "Run",
-    "Python.test2.executor": "Run",
-    "Python.test3.executor": "Run",
-    "Python.z1.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature-supervised-learning",
-    "last_opened_file_path": "/home/sitavlas/PycharmProjects/MachineLearningLab/LB2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.tabs",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.AdaBoost.executor&quot;: &quot;Run&quot;,
+    &quot;Python.CN2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ClassificationAndRegressionTrees.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ComplementNaiveBayes_classifier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.RBFClassifier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.RBFClassifierHeart.executor&quot;: &quot;Run&quot;,
+    &quot;Python.kernel_svm.executor&quot;: &quot;Run&quot;,
+    &quot;Python.linear_regression.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.supervised_learning.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test1_supervised_learning.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test3.executor&quot;: &quot;Run&quot;,
+    &quot;Python.z1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature-supervised-learning&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/sitavlas/PycharmProjects/MachineLearningLab/LB2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/LB2" />
@@ -114,7 +124,8 @@
       <workItem from="1740915397058" duration="2029000" />
       <workItem from="1740917549457" duration="12171000" />
       <workItem from="1741001642752" duration="8863000" />
-      <workItem from="1741028340524" duration="8370000" />
+      <workItem from="1741028340524" duration="12337000" />
+      <workItem from="1741087100415" duration="5871000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -180,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741030741234</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Refactor AdaBoost pipeline for streamlined functionality">
+      <option name="closed" value="true" />
+      <created>1741037756662</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741037756662</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +214,8 @@
     <MESSAGE value=".gitignore" />
     <MESSAGE value="Add spam classification enhancements and heart dataset&#10;&#10;Enhanced the spam classification project with improved comments, visualizations (confusion matrix, ROC curve), and metrics evaluation for the Complement Naive Bayes model. Additionally, introduced the &quot;heart.csv&quot; dataset for potential use in heart disease prediction." />
     <MESSAGE value="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes" />
+    <MESSAGE value="Refactor AdaBoost pipeline for streamlined functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
