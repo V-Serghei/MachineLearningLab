@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Refactor AdaBoost pipeline for streamlined functionality">
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="changing comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/AdaBoost.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/AdaBoost.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/CN2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/CN2.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/CN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/CN2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ClassificationAndRegressionTrees.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/ComplementNaiveBayes_classifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifier.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifier.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/RBFClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB2/RBFClassifierHeart.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB2/RBFClassifierHeart.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB2/RBFClassifierHeart.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +119,9 @@
       <workItem from="1740917549457" duration="12171000" />
       <workItem from="1741001642752" duration="8863000" />
       <workItem from="1741028340524" duration="12337000" />
-      <workItem from="1741087100415" duration="5871000" />
+      <workItem from="1741087100415" duration="5933000" />
+      <workItem from="1741641160684" duration="620000" />
+      <workItem from="1741674117644" duration="8632000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -199,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741037756662</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="changing comments">
+      <option name="closed" value="true" />
+      <created>1741092998969</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741092998969</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +219,8 @@
     <MESSAGE value="Add spam classification enhancements and heart dataset&#10;&#10;Enhanced the spam classification project with improved comments, visualizations (confusion matrix, ROC curve), and metrics evaluation for the Complement Naive Bayes model. Additionally, introduced the &quot;heart.csv&quot; dataset for potential use in heart disease prediction." />
     <MESSAGE value="Add new classification notebook implementations for CART, AdaBoost, and Naive Bayes" />
     <MESSAGE value="Refactor AdaBoost pipeline for streamlined functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="changing comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="changing comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -242,6 +247,6 @@
     <SUITE FILE_PATH="coverage/MachineLearningLab$ComplementNaiveBayes_classifier.coverage" NAME="ComplementNaiveBayes_classifier Coverage Results" MODIFIED="1741007535195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1740953958579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$RBFClassifierHeart.coverage" NAME="RBFClassifierHeart Coverage Results" MODIFIED="1741010482894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1741035189373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$ClassificationAndRegressionTrees.coverage" NAME="ClassificationAndRegressionTrees Coverage Results" MODIFIED="1741092718191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
   </component>
 </project>
