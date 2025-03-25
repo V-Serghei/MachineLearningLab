@@ -27,10 +27,19 @@ plt.xlabel('Покупатели')
 plt.ylabel('Евклидово расстояние')
 plt.show()
 
+plt.figure(figsize=(16, 10))
+Z = linkage(X_scaled, method='ward')
+dendrogram(Z, leaf_rotation=45, leaf_font_size=12, color_threshold=20)
+plt.title('Дендрограмма агломеративной кластеризации')
+plt.xlabel('Покупатели')
+plt.ylabel('Евклидово расстояние')
+plt.show()
+
 # Шаг 3: Агломеративная кластеризация с выбранным числом кластеров (например, 4)
 n_clusters = 4
 agg_clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='ward')
 labels = agg_clustering.fit_predict(X_scaled)
+
 
 # Шаг 4: Визуализация кластеров
 plt.figure(figsize=(8, 5))

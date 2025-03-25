@@ -17,6 +17,7 @@ data['Species'] = le.fit_transform(data['Species'])
 
 # Выбираем признаки для кластеризации
 X = data[['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']].values
+y_true = data['Species'].values
 
 # Стандартизация данных
 scaler = StandardScaler()
@@ -55,6 +56,22 @@ plt.title('Кластеризация методом GMM - Iris')
 plt.legend()
 plt.show()
 
-# Шаг 5: Оценка качества кластеризации
+# Шаг 5: Визуализация истинных меток классов (3D-график)
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+true_colors = ['red', 'green', 'blue']
+species_names = ['Setosa', 'Versicolor', 'Virginica']
+for species in np.unique(y_true):
+    species_points = X[y_true == species]
+    ax.scatter(species_points[:, 0], species_points[:, 1], species_points[:, 2], s=50, color=true_colors[species], label=species_names[species])
+
+ax.set_xlabel('Sepal Length')
+ax.set_ylabel('Sepal Width')
+ax.set_zlabel('Petal Length')
+plt.title('Истинные классы - Iris')
+plt.legend()
+plt.show()
+
+# Шаг 6: Оценка качества кластеризации
 silhouette_avg = silhouette_score(X_scaled, labels)
 print(f'Средний силуэтный коэффициент: {silhouette_avg:.3f}')

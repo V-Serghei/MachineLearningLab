@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
+from sklearn.metrics import calinski_harabasz_score, davies_bouldin_score
 
 # Шаг 1: Загрузка данных
 data = pd.read_csv("../data/lb3/cluster_moons.csv")
@@ -47,8 +48,12 @@ plt.grid()
 plt.show()
 
 # Шаг 6: Оценка качества кластеризации
-if len(unique_labels) > 1:
+if len(unique_labels) > 1 and -1 not in unique_labels:
     silhouette_avg = silhouette_score(X_scaled, labels)
+    ch_score = calinski_harabasz_score(X_scaled, labels)
+    db_score = davies_bouldin_score(X_scaled, labels)
     print(f'Средний силуэтный коэффициент: {silhouette_avg:.3f}')
+    print(f'Индекс Калински-Харбаса: {ch_score:.3f}')
+    print(f'Индекс Дэвиса-Болдина: {db_score:.3f}')
 else:
-    print('Оценка силуэта невозможна, так как все точки в одном кластере.')
+    print('Оценка невозможна: либо все точки в одном кластере, либо присутствует шум.')
