@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/AlgomerativeN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/AlgomerativeN.ipynb" afterDir="false" />
-    </list>
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Clustering Algorithms in Unsupervised Machine Learning" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,7 +132,7 @@
       <workItem from="1742888521366" duration="4519000" />
       <workItem from="1742902326127" duration="3741000" />
       <workItem from="1743423507754" duration="1342000" />
-      <workItem from="1743490680697" duration="5859000" />
+      <workItem from="1743490680697" duration="6575000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -233,7 +230,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742929559359</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Clustering Algorithms in Unsupervised Machine Learning">
+      <option name="closed" value="true" />
+      <created>1743504977883</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743504977883</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +256,8 @@
     <MESSAGE value="Refactor AdaBoost pipeline for streamlined functionality" />
     <MESSAGE value="changing comments" />
     <MESSAGE value="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability." />
+    <MESSAGE value="Clustering Algorithms in Unsupervised Machine Learning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clustering Algorithms in Unsupervised Machine Learning" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
