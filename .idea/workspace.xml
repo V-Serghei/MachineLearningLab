@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/Algomerative.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/Algomerative.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LB3/AlgomerativeN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/AlgomerativeN.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/DBSCAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/DBSCAN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/DBSCANS.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/DBSCANS.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/GMM.py" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/GMM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/GMMn.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/GMMn.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LB3/K_Means_n.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/LB3/K_Means_n.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +133,9 @@
       <workItem from="1742830320408" duration="148000" />
       <workItem from="1742830482674" duration="5674000" />
       <workItem from="1742888521366" duration="4519000" />
-      <workItem from="1742902326127" duration="3047000" />
+      <workItem from="1742902326127" duration="3741000" />
+      <workItem from="1743423507754" duration="1342000" />
+      <workItem from="1743490680697" duration="5859000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -229,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742851645680</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability.">
+      <option name="closed" value="true" />
+      <created>1742929559359</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1742929559359</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +277,7 @@
     <SUITE FILE_PATH="coverage/MachineLearningLab$AdaBoost.coverage" NAME="AdaBoost Coverage Results" MODIFIED="1742832094263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1740952674659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$z1.coverage" NAME="z1 Coverage Results" MODIFIED="1740947256989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
-    <SUITE FILE_PATH="coverage/MachineLearningLab$Algomerative.coverage" NAME="Algomerative Coverage Results" MODIFIED="1742891594667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB3" />
+    <SUITE FILE_PATH="coverage/MachineLearningLab$Algomerative.coverage" NAME="Algomerative Coverage Results" MODIFIED="1743493741370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB3" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$supervised_learning.coverage" NAME="supervised_learning Coverage Results" MODIFIED="1740947571113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$ComplementNaiveBayes_classifier.coverage" NAME="ComplementNaiveBayes_classifier Coverage Results" MODIFIED="1742832145628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
     <SUITE FILE_PATH="coverage/MachineLearningLab$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1740953958579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LB2" />
