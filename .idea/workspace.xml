@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Added neural network model for customer churn prediction: preprocessing, visualization, training, and evaluation">
+    <list default="true" id="55117e19-9c22-47aa-8ccf-ea9f973ed31b" name="Changes" comment="Add image preprocessing and YOLO model inference for object detection">
       <change afterPath="$PROJECT_DIR$/LB4/Keras.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LB4/new2.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/LB5/FIX.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/LB5/convolutional_neural_network_model.ipynb" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/LB5/test.py" afterDir="false" />
@@ -5275,7 +5274,7 @@
       <workItem from="1744655258879" duration="3388000" />
       <workItem from="1744658685726" duration="1055000" />
       <workItem from="1744700485234" duration="6490000" />
-      <workItem from="1744713391655" duration="1223000" />
+      <workItem from="1744713391655" duration="1541000" />
     </task>
     <task id="LOCAL-00001" summary="Getting started">
       <option name="closed" value="true" />
@@ -5389,7 +5388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744564470930</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Add image preprocessing and YOLO model inference for object detection">
+      <option name="closed" value="true" />
+      <created>1744714932790</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1744714932790</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -5409,7 +5416,8 @@
     <MESSAGE value="Implement clustering algorithms (K-Means, DBSCAN, GMM, Agglomerative) with detailed analysis and visualization. Enhanced dendrogram readability." />
     <MESSAGE value="Clustering Algorithms in Unsupervised Machine Learning" />
     <MESSAGE value="Added neural network model for customer churn prediction: preprocessing, visualization, training, and evaluation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added neural network model for customer churn prediction: preprocessing, visualization, training, and evaluation" />
+    <MESSAGE value="Add image preprocessing and YOLO model inference for object detection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add image preprocessing and YOLO model inference for object detection" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
