@@ -1,5 +1,7 @@
-# Extracted large dataset (committed as archive only)
+# Extracted large datasets (committed as archives only)
 data/creditcard.csv
+data/lab5/archive/
+data/lab5/new_images/
 
 # Python cache
 __pycache__/
