@@ -72,8 +72,12 @@ def rbf_transform(X, centers, sigma=1.0):
     Returns:
         Transformed array of shape (n_samples, n_centers).
     """
-    # X[:, np.newaxis, :] adds a dimension for broadcasting the centre subtraction.
-    return np.exp(-np.linalg.norm(X[:, np.newaxis, :] - centers, axis=2) ** 2 / (2 * sigma**2))
+    # Iterate over centres to avoid allocating (n_samples, n_centers, n_features) in one block.
+    result = np.zeros((len(X), len(centers)), dtype=np.float32)
+    for i, c in enumerate(centers):
+        diff = X - c
+        result[:, i] = np.exp(-np.sum(diff**2, axis=1) / (2 * sigma**2))
+    return result
 
 
 sigma = 2.0
