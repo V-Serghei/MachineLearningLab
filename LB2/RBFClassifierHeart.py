@@ -1,156 +1,107 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils import save_figure
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_curve, auc
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-#    Считываем датасет 'heart.csv', который содержит данные пациентов и информацию о наличии заболеваний сердца.
-data = pd.read_csv('../data/heart.csv')
+# Load heart.csv — patient records with a heart disease target label.
+data = pd.read_csv("../data/heart.csv")
 
-#    Разделяем данные на признаки (X) и целевую переменную (y). В данном случае 'target' является меткой класса.
-X = data.drop(columns=['target'])
-y = data['target'].copy()
+X = data.drop(columns=["target"])
+y = data["target"].copy()
 
-#    Строим график распределения классов для оценки баланса данных. Это важно для понимания,
-#    присутствует ли дисбаланс, который может повлиять на качество модели.
+# Visualise class distribution to assess balance before training.
 plt.figure(figsize=(6, 4))
-sns.countplot(x=y,hue=y, palette='coolwarm', legend=False)
-plt.title('Распределение классов')
+sns.countplot(x=y, hue=y, palette="coolwarm", legend=False)
+plt.title("Class distribution — Heart Disease")
+save_figure("rbf_heart_class_dist")
 plt.show()
 
-#    Разбиваем выборку на обучающую и тестовую. Параметр stratify=y обеспечивает сохранение пропорций классов
-#    в обеих выборках, что особенно важно при наличии дисбаланса между классами.
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', 100)
-#%%
+# Stratified split — preserves class proportions in both sets.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
+pd.set_option("display.max_columns", None)
+pd.set_option("display.width", 100)
+#%%
 print(data.head())
 #%%
 print(data.info())
 #%%
 print(data.describe())
 #%%
-#    Приводим все признаки к единому масштабу с помощью StandardScaler, что улучшает работу алгоритмов,
-#    особенно при расчёте расстояний (важно для KMeans и RBF-преобразования).
+# Standardise features — required for correct distance computation in KMeans and RBF.
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-#    Задаем число кластеров n_centers=10. Алгоритм KMeans обучается на стандартизованных данных,
-#    и находит центры кластеров, которые будут использоваться для последующего RBF-преобразования.
+# Find 10 cluster centres with KMeans; they serve as RBF kernel anchors.
 n_centers = 10
 kmeans = KMeans(n_clusters=n_centers, random_state=42, n_init=10)
 kmeans.fit(X_train_scaled)
 centers = kmeans.cluster_centers_
 
-# Функция векторизованного RBF-преобразования:
-#    Функция преобразует входное пространство признаков в новое, используя радиально-базисную функцию (RBF).
-#    Для каждого объекта вычисляются евклидовы расстояния до центров кластеров, затем применяется экспоненциальная функция.
-def rbf_transform(X, centers, sigma=1.0):
-    return np.exp(-np.linalg.norm(X[:, np.newaxis, :] - centers, axis=2) ** 2 / (2 * sigma ** 2))
-#%%
 
-# Применение RBF-преобразования:
-#    Преобразуем как обучающую, так и тестовую выборки, чтобы создать новые признаки, отражающие расстояния до центров кластеров.
+def rbf_transform(X, centers, sigma=1.0):
+    """Apply Gaussian RBF kernel: map each sample to distances from cluster centres.
+
+    Args:
+        X:       Input array of shape (n_samples, n_features).
+        centers: Cluster centre array of shape (n_centers, n_features).
+        sigma:   Bandwidth parameter.
+
+    Returns:
+        Transformed array of shape (n_samples, n_centers).
+    """
+    return np.exp(-np.linalg.norm(X[:, np.newaxis, :] - centers, axis=2) ** 2 / (2 * sigma**2))
+
+
+#%%
 sigma = 1.0
 X_train_rbf = rbf_transform(X_train_scaled, centers, sigma)
 X_test_rbf = rbf_transform(X_test_scaled, centers, sigma)
 
-# Обучение модели логистической регрессии:
-#    Логистическая регрессия обучается на новых признаках, полученных после RBF-преобразования.
 clf = LogisticRegression(max_iter=1000)
 clf.fit(X_train_rbf, y_train)
 
-# Предсказание и оценка точности:
-#     Производим предсказание на тестовой выборке и вычисляем общую точность модели.
 y_pred = clf.predict(X_test_rbf)
 accuracy = accuracy_score(y_test, y_pred)
-print(f'Точность модели: {accuracy:.4f}')
+print(f"Model accuracy: {accuracy:.4f}")
 #%%
 
-# Получение метрик качества:
-#     Выводим подробный отчет классификации, включающий precision, recall и f1-score для каждого класса.
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred, digits=4))
 #%%
 
-# Построение матрицы ошибок:
-#     Вычисляем матрицу ошибок, которая показывает количество правильно и неправильно классифицированных объектов для каждого класса.
 cm = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(5,4))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.xlabel('Предсказано')
-plt.ylabel('Истинное значение')
-plt.title('Матрица ошибок')
+plt.figure(figsize=(5, 4))
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+plt.xlabel("Predicted")
+plt.ylabel("True")
+plt.title("Confusion matrix — RBF Classifier (Heart)")
+save_figure("rbf_heart_cm")
 plt.show()
 #%%
 
-# Построение ROC-кривой и вычисление AUC:
-#     Рассчитываем вероятности для положительного класса, затем строим ROC-кривую, которая отражает соотношение True Positive Rate и False Positive Rate.
-#     AUC (Area Under the Curve) даёт сводную меру дискриминативной способности модели.
 y_prob = clf.predict_proba(X_test_rbf)[:, 1]
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 roc_auc = auc(fpr, tpr)
 
-plt.figure(figsize=(6,4))
-plt.plot(fpr, tpr, label=f'ROC AUC = {roc_auc:.4f}')
-plt.plot([0, 1], [0, 1], linestyle='--', color='gray')
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC-кривая')
+plt.figure(figsize=(6, 4))
+plt.plot(fpr, tpr, label=f"ROC AUC = {roc_auc:.4f}")
+plt.plot([0, 1], [0, 1], linestyle="--", color="gray")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC curve — RBF Classifier (Heart)")
 plt.legend()
+save_figure("rbf_heart_roc")
 plt.show()
-#%%
-
-
-# 1. Предварительный анализ данных:
-#    - Датасет 'heart.csv' содержит информацию, связанную с риском заболеваний сердца.
-#
-# 2. Разделение выборки:
-#    - Использование стратифицированного разбиения (stratify) гарантирует, что распределение классов сохраняется как в обучающей, так и в тестовой выборках.
-#
-# 3. Стандартизация признаков:
-#    - Приведение признаков к единому масштабу важно для корректного расчёта расстояний в алгоритмах KMeans и RBF-преобразования.
-#
-# 4. Кластеризация с помощью KMeans:
-#    - Алгоритм KMeans выделяет 10 центров кластеров, которые затем используются для нелинейного преобразования данных.
-#
-# 5. RBF-преобразование:
-#    - Применение радиально-базисной функции позволяет преобразовать исходное пространство признаков в новое, где учитываются расстояния до кластерных центров.
-#    - Это помогает логистической регрессии обнаруживать более сложные зависимости в данных.
-#
-# 6. Обучение логистической регрессии:
-#    - Модель обучается на данных, полученных после RBF-преобразования, что является примером использования ядрового подхода без применения явного ядра.
-#
-# 7. Оценка модели:
-#    - Точность (accuracy) модели составила 0.5902 (59.02%), что означает, что лишь около 59% предсказаний совпадают с истинными метками.
-#    - Отчет классификации показывает:
-#         * Для класса 0: precision = 1.0000, recall = 0.1071, f1-score = 0.1935
-#         * Для класса 1: precision = 0.5690, recall = 1.0000, f1-score = 0.7253
-#      Это указывает на сильную разницу между классами: модель с высокой уверенностью предсказывает класс 1 (все реальные случаи обнаружены),
-#      но при этом практически не распознаёт объекты класса 0, что приводит к низкому recall для этого класса.
-#
-# 8. Матрица ошибок:
-#    - Матрица ошибок иллюстрирует, что большинство объектов, относящихся к классу 0, были неверно классифицированы как класс 1.
-#
-# 9. ROC-кривая и AUC:
-#    - ROC-кривая и AUC (площадь под кривой) предоставляют информацию о дискриминативной способности модели.
-#      Однако, учитывая расхождение в метриках по классам, общая способность модели к различению классов оставляет желать лучшего.
-#
-# Выводы:
-# - Модель демонстрирует высокую чувствительность к классу 1 (recall = 1.0000), но при этом не способна правильно идентифицировать класс 0
-#   (низкий recall для класса 0). Это приводит к неравномерности в оценке качества модели.
-# - Несмотря на высокую точность предсказаний для класса 0 (precision = 1.0000), её низкое значение recall означает, что модель упускает большую часть объектов класса 0.
-# - Результаты указывают на необходимость дополнительной оптимизации:
-#     * Возможное изменение числа кластеров (n_centers) или параметра sigma в RBF-преобразовании.
-#     * Применение методов балансировки классов для улучшения предсказаний для менее представленного класса.
-# - Для улучшения общей эффективности модели следует провести дальнейший анализ данных и, возможно, использовать другие алгоритмы,
-#   более устойчивые к дисбалансу классов.

@@ -1,19 +1,18 @@
-# Импорт необходимых библиотек:
-import pandas as pd                  # Для работы с табличными данными
-import numpy as np                   # Для числовых вычислений
-from sklearn.naive_bayes import ComplementNB  # Импорт Комплементарного Наивного Байеса
-from sklearn.model_selection import train_test_split  # Для разделения данных на обучающую и тестовую выборки
-from sklearn.metrics import accuracy_score, classification_report  # Для оценки качества модели
+# Import required libraries
+import pandas as pd                   # Tabular data handling
+import numpy as np                    # Numerical computation
+from sklearn.naive_bayes import ComplementNB  # Complement Naive Bayes classifier
+from sklearn.model_selection import train_test_split  # Train/test split
+from sklearn.metrics import accuracy_score, classification_report  # Model evaluation
 
 # =======================
-# 1. Создание синтетического датасета
+# 1. Synthetic dataset
 # =======================
-# Здесь мы создаем небольшой набор данных, имитирующий фильтрацию спама.
-# Каждая строка (запись) представляет собой сообщение, а столбцы – частоты появления ключевых слов.
-# Пример:
-#   - 'discount', 'win', 'prize', 'buy' – слова, характерные для спама (спамовые признаки).
-#   - 'hello' – слово, которое чаще встречается в обычных (не спам) сообщениях.
-# Метки классов: 1 означает "спам", 0 – "не спам".
+# Small dataset simulating spam filtering.
+# Each row represents a message; columns are keyword occurrence counts.
+# 'discount', 'win', 'prize', 'buy' — spam-indicative words.
+# 'hello' — common in legitimate messages.
+# Labels: 1 = spam, 0 = not spam.
 data = {
     'discount': [2, 0, 1, 0, 3, 0, 0, 1, 2, 0],
     'win':      [1, 0, 0, 0, 2, 0, 0, 1, 1, 0],
@@ -21,82 +20,61 @@ data = {
     'buy':      [1, 0, 0, 0, 1, 0, 0, 1, 1, 0],
     'hello':    [0, 1, 0, 1, 0, 1, 1, 0, 0, 1]
 }
-labels = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0]  # 1 - спам, 0 - не спам
+labels = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0]  # 1 - spam, 0 - not spam
 
-# Преобразуем данные в DataFrame для удобства работы
 df = pd.DataFrame(data)
 df['label'] = labels
 
 # =======================
-# 2. Подготовка данных для обучения
+# 2. Prepare data for training
 # =======================
-# Разделяем DataFrame на признаки (X) и целевую переменную (y)
 X = df.drop('label', axis=1)
 y = df['label']
 
-# Делим данные на обучающую и тестовую выборки (70% на обучение, 30% на тест)
+# 70% training, 30% test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # =======================
-# 3. Создание и обучение Комплементарного Наивного Байесовского классификатора
+# 3. Train Complement Naive Bayes
 # =======================
-# Создаем экземпляр модели.
-# Параметр alpha служит для сглаживания, что предотвращает проблему нулевых вероятностей,
-# когда в обучающей выборке не встречается какой-либо признак.
+# alpha provides Laplace smoothing to avoid zero-probability issues
+# when a feature is absent from the training set.
 clf = ComplementNB(alpha=1.0)
 
-# Обучаем модель на тренировочных данных
 clf.fit(X_train, y_train)
 
 # =======================
-# 4. Предсказание и оценка модели
+# 4. Predict and evaluate
 # =======================
-# Предсказываем классы для тестовой выборки
 y_pred = clf.predict(X_test)
 
-# Вычисляем точность модели с помощью метрики accuracy
 accuracy = accuracy_score(y_test, y_pred)
 
-# Выводим результаты: точность и подробный отчет по классификации
-print("Комплементарный Наивный Байесовский Классификатор")
-print("Точность модели на тестовой выборке:", accuracy)
-print("\nОтчет по классификации:")
+print("Complement Naive Bayes Classifier")
+print("Model accuracy on test set:", accuracy)
+print("\nClassification report:")
 print(classification_report(y_test, y_pred))
 
 # =======================
-# Пояснения по шагам кода:
+# Notes:
 # =======================
-# 1. Импорт библиотек:
-#    - pandas и numpy используются для работы с данными.
-#    - ComplementNB из sklearn.naive_bayes реализует Комплементарный Наивный Байес.
-#    - train_test_split делит данные на обучающую и тестовую выборки.
-#    - accuracy_score и classification_report помогают оценить качество модели.
+# 1. Libraries:
+#    pandas and numpy for data handling.
+#    ComplementNB implements Complement Naive Bayes.
+#    train_test_split creates training and test splits.
+#    accuracy_score and classification_report evaluate the model.
 #
-# 2. Создание датасета:
-#    - Датасет моделирует задачу классификации сообщений как "спам" или "не спам".
-#    - Каждая колонка соответствует количеству вхождений ключевого слова в сообщении.
-#    - Метка класса (label) указывает, является ли сообщение спамом (1) или нет (0).
-#    - Вы можете изменить/расширить этот датасет, добавив новые признаки, такие как дополнительные слова или
-#      другие характеристики сообщения.
+# 2. Dataset:
+#    Models a spam vs. not-spam classification task.
+#    Each column is the count of a keyword in a message.
+#    Can be extended with more features or real data.
 #
-# 3. Подготовка данных:
-#    - Данные разделяются на X (признаки) и y (метки классов).
-#    - Далее используется train_test_split для создания обучающей и тестовой выборок,
-#      чтобы можно было оценить, как хорошо модель обобщает на новые данные.
+# 3. Data preparation: X/y split followed by train_test_split.
 #
-# 4. Обучение модели:
-#    - Создаем объект ComplementNB с выбранным значением сглаживания alpha.
-#    - Модель обучается на тренировочных данных методом fit.
+# 4. Training: ComplementNB with alpha smoothing, fitted via fit().
 #
-# 5. Предсказание и оценка:
-#    - После обучения модель предсказывает метки для тестовых данных.
-#    - С помощью accuracy_score и classification_report оценивается качество классификации.
+# 5. Evaluation: accuracy_score and classification_report.
 #
-# 6. Интерпретация результатов:
-#    - Если точность (accuracy) высокая и отчет по классификации показывает хорошие показатели,
-#      значит модель успешно различает спам и не спам.
-#    - Комплементарный Наивный Байес особенно полезен при несбалансированных наборах данных, так как
-#      он учитывает статистику признаков не только внутри целевого класса, но и во всех остальных классах.
-#
-# Таким образом, этот код является базовым шаблоном, который вы можете адаптировать и расширять под
-# свою задачу, заполняя датасет реальными данными и добавляя дополнительные признаки при необходимости.
+# 6. Interpretation:
+#    Complement NB is especially useful for imbalanced datasets because it models
+#    the complement of each class rather than the class itself.

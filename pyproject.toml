@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 120
+exclude = [".venv", ".ipynb_checkpoints", "*.ipynb"]
+
+[tool.ruff.lint]
+# E402 — module-level import not at top (scripts use lazy imports)
+# F401 — imported but unused (scripts import for side effects / notebooks)
+# F811 — redefinition of unused name
+# F841 — local variable assigned but never used
+ignore = ["E402", "F401", "F811", "F841"]

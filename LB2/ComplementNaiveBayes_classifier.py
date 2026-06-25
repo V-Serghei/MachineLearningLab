@@ -1,29 +1,30 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils import save_figure
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
-# Библиотеки для обработки текста и построения TF-IDF признаков
+import seaborn as sns
+from matplotlib.colors import ListedColormap
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import ComplementNB
-# функций для разделения данных и оценки модели
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
-# NMF для уменьшения размерности (сохранение неотрицательности)
 from sklearn.decomposition import NMF
-from matplotlib.colors import ListedColormap
-import seaborn as sns
+
 #%%
-# Загружаем датасет "spam.csv", который содержит информацию о спаме и не спаме.
+# Load spam.csv — contains spam and ham messages.
 df = pd.read_csv("../data/spam.csv", encoding="latin-1")
-# Оставляем только нужные колонки для анализа
-df = df[['Category', 'Message']]
+df = df[["Category", "Message"]]
 
-# Преобразуем метки: 'ham' → 0 (не спам), 'spam' → 1 (спам)
-df['Label'] = df['Category'].map({'ham': 0, 'spam': 1})
+# Map labels: 'ham' -> 0 (not spam), 'spam' -> 1 (spam)
+df["Label"] = df["Category"].map({"ham": 0, "spam": 1})
 
-# Выводим первые строки датасета для проверки корректности загрузки и преобразования
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', 100)
+pd.set_option("display.max_columns", None)
+pd.set_option("display.width", 100)
 #%%
 print(df.head())
 #%%
@@ -31,145 +32,107 @@ print(df.info())
 #%%
 print(df.describe())
 #%%
-# Преобразуем текст сообщений в числовые признаки с помощью TF-IDF векторизации.
-# TF-IDF (Term Frequency - Inverse Document Frequency) позволяет оценить значимость каждого слова
-# в документе относительно всего корпуса, исключая слишком часто встречающиеся слова.
-vectorizer = TfidfVectorizer(stop_words='english')
-X_features = vectorizer.fit_transform(df['Message'])  # Получаем разреженную матрицу признаков
-y = df['Label'].values  # Целевая переменная: 0 – не спам, 1 – спам
+# TF-IDF vectorisation — weights each word by frequency in the document vs.
+# rarity across the corpus, de-emphasising stop words automatically.
+vectorizer = TfidfVectorizer(stop_words="english")
+X_features = vectorizer.fit_transform(df["Message"])  # Sparse feature matrix
+y = df["Label"].values  # 0 = not spam, 1 = spam
 #%%
-# Делим данные на обучающую и тестовую выборки в соотношении 70/30.
+# 70/30 train/test split
 X_train, X_test, y_train, y_test = train_test_split(X_features, y, test_size=0.3, random_state=42)
 
-# Инициализируем модель Комплементарного наивного Байеса, которая хорошо работает с разреженными данными,
-# характерными для текстовой классификации.
+# Complement NB works well with sparse data typical of text classification.
 clf = ComplementNB(alpha=1.0)
 clf.fit(X_train, y_train)
 
-# Получаем предсказания модели на тестовой выборке
 y_pred = clf.predict(X_test)
 
-# Оценка результатов модели:
-#  accuracy – общая точность модели;
-#  classification_report – подробные метрики для каждого класса (precision, recall, f1-score);
 acc = accuracy_score(y_test, y_pred)
-print("\nРезультаты модели на тестовой выборке:")
+print("\nModel results on test set:")
 print("Accuracy:", acc)
 print("Classification Report:\n", classification_report(y_test, y_pred))
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
 #%%
 
-# TF-IDF матрица имеет очень высокую размерность. Для визуализации результатов применяем NMF (Non-negative Matrix Factorization),
-# которая позволяет уменьшить размерность данных до 2-х компонент, сохраняя неотрицательные значения.
-# Это полезно для построения графиков с решающими границами.
-# Преобразуем разреженные матрицы в плотный формат (numpy array)
+# TF-IDF space has very high dimensionality. Apply NMF to reduce it to 2 components
+# for decision-boundary plots. NMF is used because its output is non-negative,
+# which is compatible with the NB model.
 X_train_dense = X_train.toarray()
 X_test_dense = X_test.toarray()
 
-# Применяем NMF для уменьшения размерности до 2-х компонент
 nmf = NMF(n_components=2, random_state=42)
 X_train_nmf = nmf.fit_transform(X_train_dense)
 X_test_nmf = nmf.transform(X_test_dense)
 
-# Обучаем новый экземпляр модели ComplementNB на данных, преобразованных с помощью NMF.
-# Это делается для визуализации в двумерном пространстве.
+# Train a second ComplementNB on NMF-reduced data for 2-D visualisation only.
 clf_nmf = ComplementNB(alpha=1.0)
 clf_nmf.fit(X_train_nmf, y_train)
 
-# Функция для построения решающих границ в двумерном пространстве
+
 def plot_decision_boundary(clf, X, y, title, step=0.01):
-    # Определяем диапазоны для каждой компоненты с небольшим запасом по краям
+    """Plot 2-D decision boundary with overlaid data points."""
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, step),
-                         np.arange(y_min, y_max, step))
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, step), np.arange(y_min, y_max, step))
 
-    # Предсказание классов для каждой точки сетки
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
 
-    #  контурная заливку, которая показывает области, отнесённые к разным классам
-    plt.contourf(xx, yy, Z, alpha=0.3, cmap=ListedColormap(('lightgreen', 'salmon')))
+    # Contour fill shows the decision regions
+    plt.contourf(xx, yy, Z, alpha=0.3, cmap=ListedColormap(("lightgreen", "salmon")))
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
 
-    #  точки исходного набора данных, раскрашенные по классам
+    # Overlay the data points coloured by class
     for i, j in enumerate(np.unique(y)):
-        plt.scatter(X[y == j, 0], X[y == j, 1],
-                    color=ListedColormap(('green', 'red'))(i), label=f"Class {j}", edgecolor='k')
+        plt.scatter(X[y == j, 0], X[y == j, 1], color=ListedColormap(("green", "red"))(i), label=f"Class {j}", edgecolor="k")
     plt.title(title)
-    plt.xlabel('Общий информационный фон')
-    plt.ylabel('Особенности спама')
+    plt.xlabel("General information signal")
+    plt.ylabel("Spam features")
     plt.legend()
-    plt.show()
+
+
+#%%
+# Decision boundary on training set (NMF space)
+plt.figure(figsize=(8, 6))
+plot_decision_boundary(clf_nmf, X_train_nmf, y_train, title="ComplementNB — Training set (NMF)")
+save_figure("cnb_boundary_train")
+plt.show()
 #%%
 
-# Визуализация на обучающем наборе в пространстве, полученном с помощью NMF
-plot_decision_boundary(clf_nmf, X_train_nmf, y_train, title="ComplementNB - Обучающая выборка (NMF)")
+# Decision boundary on test set (NMF space)
+plt.figure(figsize=(8, 6))
+plot_decision_boundary(clf_nmf, X_test_nmf, y_test, title="ComplementNB — Test set (NMF)")
+save_figure("cnb_boundary_test")
+plt.show()
 #%%
-
-# Визуализация на тестовой выборке в пространстве, полученном с помощью NMF
-plot_decision_boundary(clf_nmf, X_test_nmf, y_test, title="ComplementNB - Тестовая выборка (NMF)")
-#%%
-
 
 acc = accuracy_score(y_test, y_pred)
 print("Accuracy:", acc)
 print("Classification Report:\n", classification_report(y_test, y_pred))
 #%%
 
-# Матрица ошибок
+# Confusion matrix heatmap
 conf_matrix = confusion_matrix(y_test, y_pred)
 plt.figure(figsize=(6, 4))
-sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Ham', 'Spam'], yticklabels=['Ham', 'Spam'])
-plt.xlabel('Предсказанный класс')
-plt.ylabel('Истинный класс')
-plt.title('Матрица ошибок')
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=["Ham", "Spam"], yticklabels=["Ham", "Spam"])
+plt.xlabel("Predicted class")
+plt.ylabel("True class")
+plt.title("Confusion matrix — ComplementNB")
+save_figure("cnb_cm")
 plt.show()
 #%%
 
-# ROC-кривая
+# ROC curve
 y_proba = clf.predict_proba(X_test)[:, 1]
 fpr, tpr, _ = roc_curve(y_test, y_proba)
 roc_auc = auc(fpr, tpr)
 plt.figure()
-plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC-кривая (AUC = {roc_auc:.2f})')
-plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-plt.xlabel('Ложно-положительные')
-plt.ylabel('Истинно-положительные')
-plt.title('ROC-кривая для ComplementNB')
-plt.legend(loc='lower right')
+plt.plot(fpr, tpr, color="darkorange", lw=2, label=f"ROC curve (AUC = {roc_auc:.2f})")
+plt.plot([0, 1], [0, 1], color="navy", lw=2, linestyle="--")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC curve — ComplementNB")
+plt.legend(loc="lower right")
+save_figure("cnb_roc")
 plt.show()
-#%%
-
-# 1. Загрузка и предобработка данных:
-#    - Датасет "spam.csv" загружается
-#    - Из датасета выбираются только релевантные колонки ("Category" и "Message").
-#    - Метки преобразуются: 'ham' становится 0 (не спам), 'spam' становится 1 (спам).
-#
-# 2. Векторизация текста:
-#    - Использование TfidfVectorizer позволяет преобразовать текст в числовые признаки,
-#      где учитывается частота появления терминов и их значимость.
-#
-# 3. Разделение данных:
-#    - Данные разделяются на обучающую и тестовую выборки (70/30), что позволяет оценить способность модели к обобщению.
-#
-# 4. Обучение модели ComplementNB:
-#    - Модель Complement Naive Bayes обучается на TF-IDF признаках.
-#    - Оценка модели показывает:
-#         • Accuracy ≈ 93.18%,
-#         • Классификационный отчет демонстрирует высокие метрики для класса 0 (не спам) и несколько более низкие для класса 1 (спам),
-#         • Матрица ошибок указывает на наличие ложных срабатываний, особенно для не спама (например, 107 примеров класса 0 ошибочно отнесены к спаму).
-#
-# 5. Визуализация с помощью NMF:
-#    - Так как исходное пространство TF-IDF имеет высокую размерность, применяется NMF для сокращения размерности до 2-х,
-#      что позволяет построить наглядные графики с решающими границами.
-#    - Функция plot_decision_boundary строит контурную заливку, отображающую области, отнесённые к разным классам,
-#      и накладывает на неё точки обучающей и тестовой выборок.
-#
-# 6. Выводы:
-#    - Полученные метрики показывают, что модель эффективно определяет не спам, хотя для спама (класс 1) наблюдается
-#      несколько меньшая точность, что может быть связано с дисбалансом классов.
-#    - Визуализация решающих границ в двумерном пространстве (NMF) помогает оценить разделимость классов и понять, как
-#      модель различает спам и не спам, что является полезным дополнением к количественной оценке модели.
-#
