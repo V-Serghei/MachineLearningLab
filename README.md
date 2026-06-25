@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/Richie-Vist/MachineLearningLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie-Vist/MachineLearningLab/actions/workflows/ci.yml)
+[![CI](https://github.com/Richie_Vist/MachineLearningLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie_Vist/MachineLearningLab/actions/workflows/ci.yml)
 
 > Educational Python project exploring supervised and unsupervised machine learning algorithms across three lab exercises. Each lab contains a standalone script and a matching Jupyter notebook.
 
