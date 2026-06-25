@@ -7,35 +7,35 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.decomposition import PCA
 from datetime import datetime
 
-# 1. Загружаем данные
+# 1. Load data
 df = pd.read_csv("../data/lb3/Live.csv")
 
-# Убираем лишние столбцы
+# Drop irrelevant columns
 df.drop(columns=["status_id"], inplace=True)
 
-# Кодируем категориальные данные (One-Hot Encoding для status_type)
+# One-hot encode status_type
 df = pd.get_dummies(df, columns=["status_type"], drop_first=True)
 
-# Преобразуем дату публикации в удобные признаки (день недели, час)
+# Extract day-of-week and hour from the publication timestamp as numeric features
 df["status_published"] = pd.to_datetime(df["status_published"])
 df["day_of_week"] = df["status_published"].dt.dayofweek
 df["hour"] = df["status_published"].dt.hour
-df.drop(columns=["status_published"], inplace=True)  # Удаляем оригинальную дату
+df.drop(columns=["status_published"], inplace=True)  # Drop original datetime column
 
-# Если есть другие ненужные колонки, удаляем их
+# Drop any remaining unused columns
 for col in ["Column1", "Column2", "Column3", "Column4"]:
     if col in df.columns:
         df.drop(columns=[col], inplace=True)
 
-# 2. Стандартизация данных
+# 2. Standardise
 scaler = StandardScaler()
 df_scaled = scaler.fit_transform(df)
 
-# 3. Запускаем DBSCAN
-dbscan = DBSCAN(eps=2.0, min_samples=5)  # eps можно варьировать
+# 3. DBSCAN clustering
+dbscan = DBSCAN(eps=2.0, min_samples=5)  # eps can be tuned
 df["DBSCAN_Cluster"] = dbscan.fit_predict(df_scaled)
 
-#4. PCA для снижения размерности
+# 4. Reduce to 2 components with PCA for visualisation
 pca = PCA(n_components=2)
 df_pca = pca.fit_transform(df_scaled)
 df["PCA1"] = df_pca[:, 0]
@@ -46,11 +46,10 @@ df_scaled_no_outliers = df_scaled[df["DBSCAN_Cluster"] != -1]
 
 
 
-# 5. Визуализация кластеров
+# 5. Visualise clusters
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x=df["PCA1"], y=df["PCA2"], hue=df["DBSCAN_Cluster"], palette="viridis", legend="full")
-plt.xlabel("Главный компонент 1 (PCA1)")
-plt.ylabel("Главный компонент 2 (PCA2)")
-plt.title("DBSCAN Кластеризация")
+plt.xlabel("Principal Component 1 (PCA1)")
+plt.ylabel("Principal Component 2 (PCA2)")
+plt.title("DBSCAN clustering")
 plt.show()
-

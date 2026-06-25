@@ -1,4 +1,4 @@
-# Импорт необходимых библиотек
+# Import required libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,53 +7,53 @@ from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.metrics import silhouette_score
 
-# Шаг 1: Загрузка данных
+# Step 1: Load data
 data = pd.read_csv("../data/lb3/Wholesale_customers_data.csv")
 print(data.head())
 
-# Выбор признаков для кластеризации
+# Select features for clustering
 X = data[['Fresh', 'Milk', 'Grocery', 'Frozen', 'Detergents_Paper', 'Delicassen']].values
 
-# Масштабирование данных
+# Scale features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Шаг 2: Построение дендрограммы для определения числа кластеров
+# Step 2: Plot dendrogram to determine the number of clusters
 plt.figure(figsize=(16, 10))
 Z = linkage(X_scaled, method='ward')
 dendrogram(Z, truncate_mode='lastp', p=30, leaf_rotation=45, leaf_font_size=12, color_threshold=20)
-plt.title('Дендрограмма агломеративной кластеризации')
-plt.xlabel('Покупатели')
-plt.ylabel('Евклидово расстояние')
+plt.title('Agglomerative clustering dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distance')
 plt.show()
 
 plt.figure(figsize=(16, 10))
 Z = linkage(X_scaled, method='ward')
 dendrogram(Z, leaf_rotation=45, leaf_font_size=12, color_threshold=20)
-plt.title('Дендрограмма агломеративной кластеризации')
-plt.xlabel('Покупатели')
-plt.ylabel('Евклидово расстояние')
+plt.title('Agglomerative clustering dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distance')
 plt.show()
 
-# Шаг 3: Агломеративная кластеризация с выбранным числом кластеров (например, 4)
+# Step 3: Agglomerative clustering with the chosen number of clusters
 n_clusters = 4
 agg_clustering = AgglomerativeClustering(n_clusters=n_clusters, linkage='ward')
 labels = agg_clustering.fit_predict(X_scaled)
 
 
-# Шаг 4: Визуализация кластеров
+# Step 4: Visualise clusters
 plt.figure(figsize=(8, 5))
 colors = ['red', 'blue', 'green', 'cyan', 'magenta']
 for cluster in np.unique(labels):
     cluster_points = X[labels == cluster]
-    plt.scatter(cluster_points[:, 0], cluster_points[:, 1], s=50, color=colors[cluster], label=f'Кластер {cluster+1}')
+    plt.scatter(cluster_points[:, 0], cluster_points[:, 1], s=50, color=colors[cluster], label=f'Cluster {cluster+1}')
 
 plt.xlabel('Fresh')
 plt.ylabel('Milk')
-plt.title('Кластеризация методом агломерации')
+plt.title('Agglomerative clustering')
 plt.legend()
 plt.show()
 
-# Шаг 5: Оценка качества кластеризации
+# Step 5: Evaluate clustering quality
 silhouette_avg = silhouette_score(X_scaled, labels)
-print(f'Средний силуэтный коэффициент: {silhouette_avg:.3f}')
+print(f'Average silhouette score: {silhouette_avg:.3f}')

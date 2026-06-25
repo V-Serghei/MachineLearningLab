@@ -1,42 +1,42 @@
-# Импорт библиотек
+# Import libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Импорт датасета (используем только столбцы Age и EstimatedSalary)
+# Load dataset (using only Age and EstimatedSalary columns)
 dataset = pd.read_csv('../data/Social_Network_Ads.csv')
-X = dataset.iloc[:, [2, 3]].values  # выбираем только Age и EstimatedSalary
-y = dataset.iloc[:, 4].values       # выбираем столбец Purchased
+X = dataset.iloc[:, [2, 3]].values  # select Age and EstimatedSalary
+y = dataset.iloc[:, 4].values       # select Purchased column
 
-# Разделение датасета на обучающую и тестовую выборки
+# Split dataset into training and test sets
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
-# Масштабирование признаков
+# Feature scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Обучение модели Kernel SVM на обучающем наборе
+# Fit Kernel SVM on the training set
 from sklearn.svm import SVC
 classifier = SVC(kernel='rbf', random_state=0)
 classifier.fit(X_train, y_train)
 
-# Предсказание для нового примера (теперь передаём 2 признака)
+# Predict for a new sample (2 features)
 print(classifier.predict(sc.transform([[30, 87000]])))
 
-# Предсказание для тестовой выборки
+# Predict on the test set
 y_pred = classifier.predict(X_test)
 print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))
 
-# Создание матрицы ошибок и вычисление точности
+# Build confusion matrix and compute accuracy
 from sklearn.metrics import confusion_matrix, accuracy_score
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 
-# Визуализация результатов на обучающем наборе
+# Visualise results on the training set
 from matplotlib.colors import ListedColormap
 X_set, y_set = sc.inverse_transform(X_train), y_train
 X1, X2 = np.meshgrid(np.arange(start=X_set[:, 0].min() - 10,
@@ -58,7 +58,7 @@ plt.ylabel('Estimated Salary')
 plt.legend()
 plt.show()
 
-# Визуализация результатов на тестовой выборке
+# Visualise results on the test set
 X_set, y_set = sc.inverse_transform(X_test), y_test
 X1, X2 = np.meshgrid(np.arange(start=X_set[:, 0].min() - 10,
                                  stop=X_set[:, 0].max() + 10, step=1),

@@ -3,29 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# - train_test_split для разбиения данных на обучающую и тестовую выборки.
-# - Метрики classification_report, confusion_matrix, accuracy_score для количественной оценки модели.
+# - train_test_split to split data into training and test sets.
+# - classification_report, confusion_matrix, accuracy_score to evaluate the model.
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-# Импортируем CN2Learner из Orange3 – алгоритм, реализующий правило-ориентированное обучение (CN2).
-# Также импортируем классы для работы с данными Orange (Table, Domain, DiscreteVariable).
+# CN2Learner from Orange3 — a rule-based classifier.
+# Table, Domain, DiscreteVariable are needed to work with Orange data structures.
 from Orange.classification import CN2Learner
 from Orange.data import Table, Domain, DiscreteVariable
 
-# 1. Загрузка данных
-# Загружаем датасет "mushrooms.csv", который содержит данные о грибах.
-# Целевая переменная 'class' обычно указывает, съедобен гриб или ядовит.
+# 1. Load data
+# mushrooms.csv contains mushroom records; 'class' indicates edible or poisonous.
 data = pd.read_csv("../data/mushrooms.csv")
 
-# 2. Преобразование категориальных данных в тип 'category'
-# Так как все признаки в датасете являются категориальными, приводим каждый столбец к типу category.
-# Это необходимо для последующей обработки, кодирования и корректного создания домена для Orange.
+# 2. Cast all columns to category dtype.
+# All features are categorical; this is required for encoding and Orange domain creation.
 for column in data.columns:
     data[column] = data[column].astype('category')
 
-# Определяем признаки (X) и целевую переменную (y)
-# X – все столбцы, кроме 'class', а y – непосредственно 'class'.
+# Define features (X) and target variable (y)
 X = data.drop(columns=['class'])
 y = data['class']
 
@@ -42,144 +39,131 @@ print(data.describe())
 
 #%%
 
-# Разделение данных на обучающую и тестовую выборки.
-# Используем stratify=y, чтобы пропорции классов остались примерно одинаковыми в обоих наборах.
+# Split data into training and test sets.
+# stratify=y keeps class proportions equal in both splits.
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42, stratify=y
 )
 
-# 3. Создание домена Orange3
-# Для работы с алгоритмами Orange необходимо создать Domain – описание набора признаков и целевой переменной.
-# Каждый признак описывается как DiscreteVariable с указанием возможных значений (из категорий столбца).
+# 3. Create Orange3 Domain
+# Domain describes features and the target variable for Orange algorithms.
+# Each feature is a DiscreteVariable with its possible category values.
 feature_vars = [DiscreteVariable(name, values=list(data[name].cat.categories)) for name in X.columns]
-# Целевая переменная 'class' также определяется как DiscreteVariable.
+# Target variable 'class' is also a DiscreteVariable.
 class_var = DiscreteVariable('class', values=list(y.cat.categories))
-# Объединяем признаки и целевую переменную в один домен.
+# Combine features and target into a single domain.
 domain = Domain(feature_vars, class_var)
 
-# 4. Преобразование категориальных данных в числовые коды
-# Для обучения модели необходимо преобразовать категориальные данные в числовой формат.
-# Для каждого столбца обучающей и тестовой выборки получаем числовые коды (cat.codes).
+# 4. Encode categorical data as integer codes.
+# Orange requires numeric input; cat.codes converts each category to an integer.
 X_train_enc = np.column_stack([X_train[col].cat.codes for col in X_train.columns])
 y_train_enc = y_train.cat.codes.to_numpy().reshape(-1, 1)
 
 X_test_enc = np.column_stack([X_test[col].cat.codes for col in X_test.columns])
 y_test_enc = y_test.cat.codes.to_numpy().reshape(-1, 1)
 
-# 5. Преобразование данных в формат Orange3 Table
-# Объединяем преобразованные признаки и целевую переменную и создаем объекты Table для обучающей и тестовой выборок.
+# 5. Convert to Orange3 Table format
 train_data = Table(domain, np.hstack((X_train_enc, y_train_enc)))
 test_data = Table(domain, np.hstack((X_test_enc, y_test_enc)))
 
-# 6. Обучение модели CN2
-# Инициализируем CN2Learner – правило-ориентированный классификатор.
-# Обучаем модель на обучающем наборе данных.
+# 6. Train CN2 model
+# CN2Learner is a rule-based classifier that generates a set of classification rules.
 cn2 = CN2Learner()
 model = cn2(train_data)
 
-# 7. Предсказание на тестовой выборке
-# Для каждого объекта из тестового набора получаем предсказание с помощью обученной модели.
-# Результаты собираем в массив y_pred.
+# 7. Predict on the test set
 y_pred = np.array([model(x) for x in test_data])
 #%%
 
-# 8. Оценка результатов
-# - precision (точность) – доля верных положительных предсказаний среди всех положительных,
-# - recall (полнота) – доля верных положительных предсказаний среди всех реальных положительных,
-# - f1-score – гармоническое среднее между precision и recall.
-print("\nОтчет по классификации:")
+# 8. Evaluate results
+# precision: fraction of correct positive predictions among all predicted positives.
+# recall: fraction of correct positive predictions among all actual positives.
+# f1-score: harmonic mean of precision and recall.
+print("\nClassification report:")
 print(classification_report(y_test_enc, y_pred, digits=4))
 #%%
 
-# Вычисляем и выводим общую точность модели – долю правильно классифицированных объектов.
+# Overall accuracy — fraction of correctly classified samples.
 accuracy = accuracy_score(y_test_enc, y_pred)
 print(f"Accuracy: {accuracy:.4f}")
 #%%
 
-# 9. Визуализация результатов
+# 9. Visualisations
 
-## 9.1. Матрица ошибок
+## 9.1. Confusion matrix heatmap
 plt.figure(figsize=(6, 4))
 sns.heatmap(confusion_matrix(y_test_enc, y_pred), annot=True, fmt="d", cmap="Blues")
-plt.title("Матрица ошибок")
-plt.xlabel("Предсказанный класс")
-plt.ylabel("Истинный класс")
+plt.title("Confusion matrix")
+plt.xlabel("Predicted class")
+plt.ylabel("True class")
 plt.show()
 #%%
 
-## 9.2. Гистограмма предсказанных классов
+## 9.2. Predicted class histogram
 plt.figure(figsize=(6, 4))
 sns.histplot(y_pred, bins=np.arange(len(class_var.values)+1)-0.5, kde=False, color="purple")
 plt.xticks(range(len(class_var.values)), class_var.values)
-plt.title("Распределение предсказанных классов")
-plt.xlabel("Классы")
-plt.ylabel("Частота")
+plt.title("Predicted class distribution")
+plt.xlabel("Class")
+plt.ylabel("Frequency")
 plt.show()
 #%%
 
-## 9.3. Круговая диаграмма предсказанных классов
+## 9.3. Predicted class pie chart
 plt.figure(figsize=(6, 6))
 plt.pie(np.bincount(y_pred), labels=class_var.values, autopct='%1.1f%%', colors=['#ff9999','#66b3ff'])
-plt.title("Распределение предсказанных классов")
+plt.title("Predicted class distribution")
 plt.show()
 #%%
 
-## 9.4. График сравнения реальных и предсказанных классов
+## 9.4. True vs. predicted classes scatter plot
 y_test_num = y_test.cat.codes
 y_pred_num = y_pred
 
 plt.figure(figsize=(10, 6))
-plt.scatter(range(len(y_test_num)), y_test_num, color='blue', label='Реальные классы', alpha=0.5)
-plt.scatter(range(len(y_pred_num)), y_pred_num, color='red', label='Предсказанные классы', alpha=0.5)
-plt.title("Сравнение реальных и предсказанных классов")
-plt.xlabel("Индекс примера")
-plt.ylabel("Класс")
+plt.scatter(range(len(y_test_num)), y_test_num, color='blue', label='True classes', alpha=0.5)
+plt.scatter(range(len(y_pred_num)), y_pred_num, color='red', label='Predicted classes', alpha=0.5)
+plt.title("True vs. predicted classes")
+plt.xlabel("Sample index")
+plt.ylabel("Class")
 plt.legend()
 plt.show()
 y_test_num = y_test.cat.codes
 y_pred_num = y_pred
 #%%
 
-# Вычисляем разницу между истинными и предсказанными метками
+# Difference between true and predicted labels
 errors = y_test_num - y_pred_num
 
 plt.figure(figsize=(10, 6))
-plt.stem(range(len(errors)), errors)  # убрали use_line_collection
-plt.title("Разница между истинными и предсказанными классами (Ошибки)")
-plt.xlabel("Индекс примера")
-plt.ylabel("Разница (True - Predicted)")
+plt.stem(range(len(errors)), errors)
+plt.title("Difference between true and predicted classes (errors)")
+plt.xlabel("Sample index")
+plt.ylabel("Difference (True - Predicted)")
 plt.show()
 #%%
 
-# Разделение данных:
-#    - Данные разбиваются на обучающую и тестовую выборки с сохранением пропорций классов (stratify=y).
+# Data split:
+#    stratify=y preserves class proportions in both splits.
 #
-# Создание домена Orange3:
-#    - Формируется Domain, включающий все категориальные признаки и целевую переменную.
-#    - Это необходимо для корректного преобразования данных в формат Orange Table.
+# Orange3 Domain:
+#    Built from all categorical features and the target variable.
+#    Required to convert data into the Orange Table format.
 #
-# Преобразование категориальных данных:
-#    - Категориальные значения преобразуются в числовые коды (cat.codes), что позволяет обучать модель CN2.
+# Categorical encoding:
+#    cat.codes converts categories to integers for CN2 training.
 #
-# Обучение модели CN2:
-#    - Модель CN2Learner обучается на преобразованных данных.
-#    - CN2 – правило-ориентированный классификатор, который генерирует набор правил для классификации.
+# CN2 training:
+#    CN2Learner generates a set of classification rules.
 #
-# Оценка модели:
-#    - Выводятся стандартные метрики (precision, recall, f1-score) и общая точность (accuracy).
-#    - Полученные результаты (accuracy ≈ 0.9975, очень высокие метрики) свидетельствуют о качественном обучении модели.
+# Evaluation:
+#    Precision, recall, f1-score, and accuracy ≈ 99.75% — model is well-trained.
 #
-# Визуализация результатов:
-#    - Матрица ошибок (heatmap) дает наглядное представление о количестве верных и ошибочных предсказаний.
-#    - Гистограмма и круговая диаграмма показывают распределение предсказанных классов.
-#    - График сравнения реальных и предсказанных классов позволяет увидеть расхождения между ними.
+# Visualisations:
+#    Confusion matrix, histogram, pie chart, and scatter plot provide
+#    a visual assessment of model quality and class distribution.
 #
-# Выводы:
-#    - Модель CN2 продемонстрировала высокую точность классификации (accuracy ≈ 99.75%),
-#      что указывает на отличное разделение классов в датасете грибов.
-#    - Вычисленные метрики (precision, recall, f1-score) для обоих классов находятся на очень высоком уровне.
-#    - Построенные графики (матрица ошибок, гистограмма, круговая диаграмма и scatter plot)
-#      позволяют визуально оценить качество модели и распределение предсказанных классов.
-#    - Дополнительная визуализация, например, набора правил или сравнительного бар-чарта метрик,
-#      могла бы еще более явно продемонстрировать результаты работы модели.
+# Conclusions:
+#    CN2 achieved accuracy ≈ 99.75% — excellent class separation in the mushroom dataset.
+#    All metrics are very high for both classes.
 #

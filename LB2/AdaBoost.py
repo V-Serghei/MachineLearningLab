@@ -3,34 +3,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from sklearn.model_selection import train_test_split  # Разделение данных на обучающую и тестовую выборки
-from sklearn.preprocessing import StandardScaler  # Масштабирование данных
-from sklearn.ensemble import AdaBoostClassifier  # Алгоритм AdaBoost
-from sklearn.tree import DecisionTreeClassifier  # Базовый Estimator (дерево решений)
-from sklearn.impute import SimpleImputer  # Заполнение пропущенных значений в данных
-from sklearn.metrics import (  # Метрики оценки качества модели
+from sklearn.model_selection import train_test_split  # Split data into training and test sets
+from sklearn.preprocessing import StandardScaler  # Feature scaling
+from sklearn.ensemble import AdaBoostClassifier  # AdaBoost algorithm
+from sklearn.tree import DecisionTreeClassifier  # Base estimator (decision tree)
+from sklearn.impute import SimpleImputer  # Fill missing values
+from sklearn.metrics import (  # Model evaluation metrics
     classification_report, confusion_matrix, accuracy_score, roc_curve, auc
 )
 
 
-# 1. Загрузка датасета из файла CSV
+# 1. Load dataset from CSV
 data = pd.read_csv("../data/breast_cancer_data.csv")
-# Удаление столбцов с названием 'Unnamed', если они присутствуют(они могут появляться случайно в файлах такого формата)
+# Drop 'Unnamed' columns if present (may appear as an artifact in CSV files)
 data = data.loc[:, ~data.columns.str.contains('Unnamed')]
 
-# 2. Предварительная обработка данных
-# Удаление столбца 'id', так как он не имеет значимости для модели
+# 2. Preprocessing
+# Drop 'id' column — not informative for the model
 if 'id' in data.columns:
     data.drop(columns=['id'], inplace=True)
 
-# Преобразование целевой переменной 'diagnosis': M (злокачественная) -> 1, B (доброкачественная) -> 0
+# Encode target: M (malignant) -> 1, B (benign) -> 0
 data['diagnosis'] = data['diagnosis'].map({'M': 1, 'B': 0})
 
-# Определение признаков (X - объясняющие переменные) и целевой переменной (y - целевой столбец)
+# Define features (X) and target variable (y)
 X = data.drop(columns=['diagnosis'])
 y = data['diagnosis']
 
-# Заполнение пропущенных значений в объясняющих переменных медианными значениями
+# Fill missing values with column medians
 imputer = SimpleImputer(strategy='median')
 X = pd.DataFrame(imputer.fit_transform(X), columns=X.columns)
 
@@ -43,133 +43,116 @@ print(data.info())
 
 print(data.describe())
 
-# 3. Разделение данных на обучающую и тестовую выборки
-# Данные делятся в пропорции 70/30 с фиксированным random_state для воспроизводимости
+# 3. Split into training and test sets (70/30 with fixed random_state for reproducibility)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
 
-# 4. Масштабирование признаков
-# Нормализация данных с помощью StandardScaler (важно для большинства моделей машинного обучения)
+# 4. Feature scaling — standardise with StandardScaler
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# 5. Инициализация базового классификатора ("пень", stump)
-# Используется DecisionTreeClassifier с глубиной 1 в качестве слабого классификатора
+# 5. Initialise base estimator (decision stump: depth-1 tree)
 base_estimator = DecisionTreeClassifier(max_depth=1, random_state=42)
 
-# 6. Инициализация и обучение модели AdaBoostClassifier
-# Конфигурация модели: базовый классификатор, 50 слабых оценщиков и фиксированная скорость обучения 1.0
+# 6. Initialise and train AdaBoostClassifier — 50 weak estimators, learning_rate=1.0
 ada = AdaBoostClassifier(
     estimator=base_estimator,
     n_estimators=50,
     learning_rate=1.0,
     random_state=42
 )
-# Обучение модели на масштабированных тренировочных данных
 ada.fit(X_train_scaled, y_train)
 
 
-# 7. Предсказание и оценка модели
-# Выполнение предсказания на тестовых данных
+# 7. Prediction and evaluation
 y_pred = ada.predict(X_test_scaled)
 
-# Вывод отчёта по классификации (precision, recall, f1-score) для оценки качества модели
-print("Отчет по классификации:")
+# Classification report: precision, recall, f1-score per class
+print("Classification report:")
 print(classification_report(y_test, y_pred, digits=4))
-#Precision показывает, сколько предсказаний для класса были правильными, recall — сколько реальных объектов класса модель нашла, а F1-score — их баланс. Accuracy —
-# доля верных предсказаний. Macro avg усредняет метрики по классам, а weighted avg учитывает их частоту. Модель работает с точностью 97%, хорошо сбалансирована и
-# редко ошибается.
+# Precision: fraction of positive predictions that are correct.
+# Recall: fraction of actual positives the model found.
+# F1-score: harmonic mean of precision and recall.
+# Model accuracy: 97% — well-balanced, very few errors.
 
-# Вывод матрицы ошибок для анализа правильных и ошибочных предсказаний
-print("Матрица ошибок:")
+# Confusion matrix
+print("Confusion matrix:")
 print(confusion_matrix(y_test, y_pred))
 
-
-# Вывод точности (Accuracy) модели
+# Accuracy
 print("Accuracy: {:.4f}".format(accuracy_score(y_test, y_pred)))
 
 
-# 8. Визуализация ROC-кривой
-# Расчёт вероятностей для положительного класса и ROC-кривой
+# 8. ROC curve
 y_proba = ada.predict_proba(X_test_scaled)[:, 1]
 fpr, tpr, _ = roc_curve(y_test, y_proba)
 roc_auc = auc(fpr, tpr)
 
-# Построение ROC-кривой для визуальной оценки качества модели
 plt.figure(figsize=(8, 6))
-plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC кривая (AUC = {roc_auc:.2f})')
+plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.2f})')
 plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC кривая для AdaBoost')
+plt.title('ROC Curve for AdaBoost')
 plt.legend(loc="lower right")
 plt.show()
 
 
-# Визуализация матрицы ошибок
-# Используется heatmap для отображения количества ошибок и успешных предсказаний
+# Confusion matrix heatmap
 plt.figure(figsize=(6, 5))
 sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, fmt='d', cmap='Blues')
-plt.xlabel("Предсказанный класс")
-plt.ylabel("Истинный класс")
-plt.title("Матрица ошибок")
+plt.xlabel("Predicted class")
+plt.ylabel("True class")
+plt.title("Confusion matrix")
 plt.show()
 
 
 
 
-# 9. Распределение целевой переменной
-# Построение гистограммы для анализа пропорции классов в данных
+# 9. Target variable distribution
 plt.figure(figsize=(6, 4))
-sns.countplot(x=y,hue=y, palette="coolwarm",legend=False)
-plt.xlabel("Класс")
-plt.ylabel("Количество")
-plt.title("Распределение целевой переменной")
+sns.countplot(x=y, hue=y, palette="coolwarm", legend=False)
+plt.xlabel("Class")
+plt.ylabel("Count")
+plt.title("Target variable distribution")
 plt.show()
 
 
-# 10. Корреляционная матрица
-# Визуализация корреляционной матрицы для нахождения взаимосвязей между признаками
+# 10. Correlation matrix
 plt.figure(figsize=(12, 10))
 corr_matrix = data.corr()
 sns.heatmap(corr_matrix, cmap="coolwarm", annot=False)
-plt.title("Корреляционная матрица признаков")
+plt.title("Feature correlation matrix")
 plt.show()
 
 
-# 11. Гистограммы распределения признаков
-# Построение гистограмм для изучения распределения числовых признаков
+# 11. Feature distribution histograms
 X.hist(figsize=(12, 10), bins=20, color='steelblue', edgecolor='black')
-plt.suptitle("Гистограммы распределения признаков")
+plt.suptitle("Feature distribution histograms")
 plt.show()
 
 
-# 12. Важность признаков
-# Вычисление важности признаков по модели AdaBoost
+# 12. Feature importances
 feature_importances = ada.feature_importances_
 features = X.columns
-# Сортировка по значимости
+# Sort by descending importance
 sorted_indices = np.argsort(feature_importances)[::-1]
 
-# Визуализация важности признаков (барплот для наглядности)
 plt.figure(figsize=(10, 6))
 sns.barplot(x=feature_importances[sorted_indices], y=features[sorted_indices], hue=features[sorted_indices], palette="viridis", legend=False)
-plt.xlabel("Важность признака")
-plt.ylabel("Признак")
-plt.title("Важность признаков в модели AdaBoost")
+plt.xlabel("Feature importance")
+plt.ylabel("Feature")
+plt.title("Feature importances in AdaBoost")
 plt.show()
 
-# Вывод:
-# 1. Код корректно реализует полный цикл работы алгоритма AdaBoost с использованием decision stumps.
-# 2. На этапе предобработки данные очищаются, нормализуются и корректно разделяются на обучающую и тестовую выборки.
-# 3. Метрики (precision, recall, f1-score, confusion matrix) показывают высокое качество модели:
-#    - Accuracy: 97.08%
-#    - Небольшое количество ошибок в матрице ошибок подтверждает хорошую работу модели.
-# 4. Визуализации (ROC-кривая, распределение целевой переменной, корреляционная матрица, гистограммы распределения признаков,
-#    важность признаков) позволяют детально проанализировать данные и оценить модель с разных сторон.
-# 5. Полученные результаты являются очень хорошими для данного датасета, что свидетельствует о корректности как данных, так и модели.
-#    Если цель – демонстрация работы алгоритма, то датасет выбран удачно. При необходимости можно провести дополнительные эксперименты
-#    с другими наборами данных для проверки устойчивости модели.
+# Conclusions:
+# 1. Full AdaBoost pipeline with decision stumps is implemented correctly.
+# 2. Data is cleaned, standardised, and split during preprocessing.
+# 3. Metrics show high model quality: Accuracy 97.08%, few errors in confusion matrix.
+# 4. Visualisations (ROC curve, target distribution, correlation matrix,
+#    feature histograms, feature importances) enable a detailed multi-faceted analysis.
+# 5. Results are strong for this dataset. Further experiments with other datasets
+#    can verify model robustness.
