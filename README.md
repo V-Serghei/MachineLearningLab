@@ -2,9 +2,9 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/Richie-Vist/MachineLearningLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie-Vist/MachineLearningLab/actions/workflows/ci.yml)
+[![CI](https://github.com/Richie_Vist/MachineLearningLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie_Vist/MachineLearningLab/actions/workflows/ci.yml)
 
-> Educational Python project exploring supervised and unsupervised machine learning algorithms across three lab exercises. Each lab contains a standalone script and a matching Jupyter notebook.
+> Educational Python project exploring supervised and unsupervised machine learning algorithms across six lab exercises — from linear regression to deep learning and computer vision.
 
 ---
 
@@ -30,28 +30,59 @@
 | Gaussian Mixture Model | Iris | 3 | ~0.57 |
 | Agglomerative (Ward) | Wholesale Customers | 4 | ~0.45 |
 
+### Lab 4 — Deep Learning (Keras)
+
+| Model | Dataset | Samples | Accuracy |
+|-------|---------|---------|----------|
+| MLP 78→39→19→1 (Dropout) | Bank Churn (BankChurners) | 10 127 | ~85 % |
+
+### Lab 5 — Convolutional Neural Network
+
+| Model | Dataset | Classes | Task |
+|-------|---------|---------|------|
+| CNN (Keras) | Garbage Classification | 6 | Image classification |
+
+### Lab 6 — Object Detection
+
+| Model | Task |
+|-------|------|
+| YOLO | Real-time object detection on photos |
+
 ---
 
 ## Example Plots
 
-<details>
-<summary>Click to expand</summary>
-
-> Run any script to generate plots. They are saved automatically to `results/`.
-
-| AdaBoost — ROC Curve | K-Means — Customer Segmentation |
+### Lab 1 — Linear Regression
+| Budget vs Gross | True vs Predicted |
 |:---:|:---:|
-| ![AdaBoost ROC](results/adaboost_roc.png) | ![K-Means clusters](results/kmeans_clusters.png) |
+| ![LR budget](results/lr_budget_gross.png) | ![LR pred](results/lr_true_vs_pred.png) |
 
-| DBSCAN — Moon Clusters | GMM — Iris 3D |
+### Lab 2 — Supervised Classification
+| AdaBoost — ROC Curve | CART — Decision Tree |
 |:---:|:---:|
-| ![DBSCAN](results/dbscan_clusters.png) | ![GMM Iris](results/gmm_clusters.png) |
+| ![AdaBoost ROC](results/adaboost_roc.png) | ![CART tree](results/cart_tree.png) |
 
-| Agglomerative — Dendrogram | ComplementNB — Decision Boundary |
+| ComplementNB — Decision Boundary | RBF — ROC Curve (Heart) |
 |:---:|:---:|
-| ![Dendrogram](results/agg_dendrogram_truncated.png) | ![CNB boundary](results/cnb_boundary_test.png) |
+| ![CNB boundary](results/cnb_boundary_test.png) | ![RBF ROC](results/rbf_heart_roc.png) |
 
-</details>
+### Lab 3 — Unsupervised Clustering
+| K-Means — Customer Segmentation | DBSCAN — Moon Clusters |
+|:---:|:---:|
+| ![K-Means](results/kmeans_clusters.png) | ![DBSCAN](results/dbscan_clusters.png) |
+
+| GMM — Iris 3D | Agglomerative — Dendrogram |
+|:---:|:---:|
+| ![GMM](results/gmm_clusters.png) | ![Dendrogram](results/agg_dendrogram_truncated.png) |
+
+### Lab 4 — Keras Deep Learning
+| Training Loss | Confusion Matrix |
+|:---:|:---:|
+| ![Keras loss](results/keras_training_loss.png) | ![Keras CM](results/keras_cm.png) |
+
+| Feature Correlation | Feature Importance |
+|:---:|:---:|
+| ![Keras corr](results/keras_feat_corr.png) | ![Keras importance](results/keras_feat_importance.png) |
 
 ---
 
@@ -64,6 +95,7 @@
 | numpy | ≥ 1.24 | Numerical computation |
 | matplotlib / seaborn | ≥ 3.7 / ≥ 0.12 | Visualisation |
 | scikit-learn | ≥ 1.3 | ML algorithms |
+| TensorFlow / Keras | ≥ 2.12 | Deep learning (LB4, LB5) |
 | Orange3 | ≥ 3.35 | CN2 rule-based classifier |
 | scipy | ≥ 1.11 | Hierarchical clustering |
 
@@ -88,6 +120,13 @@ MachineLearningLab/
 │   ├── GMM.py
 │   ├── Agglomerative.py
 │   └── DBSCAN_live.py
+├── LB4/                              # Lab 4 — Deep Learning
+│   └── finalKeras.py                 # MLP churn prediction (TensorFlow/Keras)
+├── LB5/                              # Lab 5 — CNN Image Classification
+│   ├── FIX.py                        # Dataset sampler utility
+│   └── convolutional_neural_network_model.ipynb
+├── LB6/                              # Lab 6 — Object Detection
+│   └── YOLO.ipynb                    # YOLO inference on test images
 ├── guide/
 │   └── kernel_svm.py                 # Kernel SVM reference example
 ├── results/                          # Auto-generated plots (git-tracked)
@@ -116,6 +155,7 @@ cd data && tar -xvf creditcard.tar.xz && cd ..
 # Run any script — plots save automatically to results/
 python LB2/AdaBoost.py
 python LB3/K_Means.py
+python LB4/finalKeras.py
 ```
 
 ### Code quality tools (optional)
@@ -123,7 +163,7 @@ python LB3/K_Means.py
 ```bash
 pip install pre-commit
 pre-commit install        # runs black + ruff + nbstripout on every commit
-pre-commit run --all-files  # run manually once
+pre-commit run --all-files
 ```
 
 ---
@@ -145,6 +185,8 @@ pre-commit run --all-files  # run manually once
 | `lb3/cluster_moons.csv` | DBSCAN |
 | `lb3/Wholesale_customers_data.csv` | Agglomerative |
 | `lb3/Live.csv` | DBSCAN Live |
+| `lab4/BankChurners.csv` | Keras MLP (Churn) |
+| `lab5/archive/` *(local only)* | CNN — Garbage Classification |
 
 ---
 
